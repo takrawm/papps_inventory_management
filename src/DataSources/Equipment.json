@@ -37,6 +37,8 @@
       "tkr_equipment_SyncErrors": "同期エラー",
       "tkr_equipmentcode": "EquipmentCode",
       "tkr_equipmentid": "EquipmentId",
+      "tkr_equipmentphoto": "EquipmentPhoto",
+      "tkr_equipmentphotoid": "tkr_EquipmentPhotoId",
       "tkr_equipmenttype": "EquipmentType",
       "tkr_fixedassetnumber": "FixedAssetNumber",
       "tkr_inventoryhistory_EquiptmentId_tkr_equipment": "InventoryHistory",

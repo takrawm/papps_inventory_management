@@ -228,7 +228,7 @@ Screens:
                               BorderColor: =RGBA(245, 245, 245, 1)
                               Default: =CurrentItem
                               Fill: =RGBA(250, 250, 250, 1)
-                              Items: =Search([@Equipment], SearchInput1.Text, tkr_equipmentcode, tkr_fixedassetnumber,tkr_serialnumber)
+                              Items: =Search([@Equipment], SearchInput1.Text, EquipmentCode, FixedAssetNumber,SerialNumber)
                               LayoutMinWidth: =0
                               OnSelect: |-
                                 =UpdateContext({ itemSelected: true, CurrentItem: ThisItem })
@@ -434,7 +434,7 @@ Screens:
                                     Font: =Font.'Segoe UI'
                                     FontWeight: =FontWeight.Semibold
                                     PaddingLeft: =30
-                                    Text: =RecordsGallery1.Selected.'EquipmentCode'
+                                    Text: =RecordsGallery1.Selected.EquipmentCode
                               - SubmitFormButton1:
                                   Control: Classic/Icon@2.5.0
                                   Properties:
@@ -568,7 +568,7 @@ Screens:
                                           BorderColor: =RGBA(245, 245, 245, 1)
                                           DataField: ="tkr_equipmentcode"
                                           Default: =ThisItem.EquipmentCode
-                                          DisplayName: =DataSourceInfo([@Equipment],DataSourceInfo.DisplayName,'tkr_equipmentcode')
+                                          DisplayName: =DataSourceInfo([@Equipment],DataSourceInfo.DisplayName,EquipmentCode)
                                           Required: =false
                                           Width: =458
                                           X: =0
@@ -625,7 +625,7 @@ Screens:
                                           BorderColor: =RGBA(245, 245, 245, 1)
                                           DataField: ="tkr_equipmenttype"
                                           Default: =ThisItem.EquipmentType
-                                          DisplayName: =DataSourceInfo([@Equipment],DataSourceInfo.DisplayName,'tkr_equipmenttype')
+                                          DisplayName: =DataSourceInfo([@Equipment],DataSourceInfo.DisplayName,EquipmentType)
                                           Required: =true
                                           Update: =DataCardValue2.Selected.Value
                                           Width: =458
@@ -744,8 +744,8 @@ Screens:
                                           BorderColor: =RGBA(245, 245, 245, 1)
                                           DataField: ="tkr_serialnumber"
                                           Default: =ThisItem.SerialNumber
-                                          DisplayName: =DataSourceInfo([@Equipment],DataSourceInfo.DisplayName,'tkr_serialnumber')
-                                          MaxLength: =DataSourceInfo([@Equipment], DataSourceInfo.MaxLength, 'tkr_serialnumber')
+                                          DisplayName: =DataSourceInfo([@Equipment],DataSourceInfo.DisplayName,SerialNumber)
+                                          MaxLength: =DataSourceInfo([@Equipment], DataSourceInfo.MaxLength, SerialNumber)
                                           Required: =false
                                           Update: =DataCardValue3.Text
                                           Width: =458
@@ -856,8 +856,8 @@ Screens:
                                           BorderColor: =RGBA(245, 245, 245, 1)
                                           DataField: ="tkr_fixedassetnumber"
                                           Default: =ThisItem.FixedAssetNumber
-                                          DisplayName: =DataSourceInfo([@Equipment],DataSourceInfo.DisplayName,'tkr_fixedassetnumber')
-                                          MaxLength: =DataSourceInfo([@Equipment], DataSourceInfo.MaxLength, 'tkr_fixedassetnumber')
+                                          DisplayName: =DataSourceInfo([@Equipment],DataSourceInfo.DisplayName,FixedAssetNumber)
+                                          MaxLength: =DataSourceInfo([@Equipment], DataSourceInfo.MaxLength, FixedAssetNumber)
                                           Required: =false
                                           Update: =DataCardValue4.Text
                                           Width: =458
@@ -968,7 +968,7 @@ Screens:
                                           BorderColor: =RGBA(245, 245, 245, 1)
                                           DataField: ="tkr_acquiredon"
                                           Default: =ThisItem.AcquiredOn
-                                          DisplayName: =DataSourceInfo([@Equipment],DataSourceInfo.DisplayName,'tkr_acquiredon')
+                                          DisplayName: =DataSourceInfo([@Equipment],DataSourceInfo.DisplayName,AcquiredOn)
                                           Required: =false
                                           Update: =DataCardValue5.SelectedDate
                                           Width: =458
@@ -1075,7 +1075,7 @@ Screens:
                                           BorderColor: =RGBA(245, 245, 245, 1)
                                           DataField: ="tkr_department"
                                           Default: =ThisItem.Department
-                                          DisplayName: =DataSourceInfo([@Equipment],DataSourceInfo.DisplayName,'tkr_department')
+                                          DisplayName: =DataSourceInfo([@Equipment],DataSourceInfo.DisplayName,Department)
                                           Required: =false
                                           Update: =DataCardValue6.Selected.Value
                                           Width: =458
@@ -1192,7 +1192,7 @@ Screens:
                                           BorderColor: =RGBA(245, 245, 245, 1)
                                           DataField: ="tkr_currentstatus"
                                           Default: =ThisItem.CurrentStatus
-                                          DisplayName: =DataSourceInfo([@Equipment],DataSourceInfo.DisplayName,'tkr_currentstatus')
+                                          DisplayName: =DataSourceInfo([@Equipment],DataSourceInfo.DisplayName,CurrentStatus)
                                           Required: =false
                                           Update: =DataCardValue7.Selected.Value
                                           Width: =458
@@ -1301,16 +1301,17 @@ Screens:
                                                 Width: =30
                                                 Wrap: =false
                                                 Y: =DataCardKey7.Y
-                                    - tkr_QRCodeImageId_DataCard1:
+                                    - EquipmentPhoto_DataCard1:
                                         Control: TypedDataCard@1.0.7
-                                        Variant: ClassicTextualView
+                                        Variant: ClassicLargePicture
                                         IsLocked: true
                                         Properties:
                                           BorderColor: =RGBA(245, 245, 245, 1)
-                                          DataField: ="tkr_qrcodeimageid"
-                                          Default: =ThisItem.tkr_QRCodeImageId
-                                          DisplayName: =DataSourceInfo([@Equipment],DataSourceInfo.DisplayName,'tkr_qrcodeimageid')
+                                          DataField: ="tkr_equipmentphoto"
+                                          Default: =ThisItem.EquipmentPhoto
+                                          DisplayName: =DataSourceInfo([@Equipment],DataSourceInfo.DisplayName,'tkr_equipmentphoto')
                                           Required: =false
+                                          Update: =Image4.Image
                                           Width: =458
                                           X: =1
                                           Y: =3
@@ -1336,28 +1337,98 @@ Screens:
                                                 Wrap: =false
                                                 X: =30
                                                 Y: =10
-                                          - DataCardValue8:
-                                              Control: Label@2.5.1
+                                          - Image4:
+                                              Control: Image@2.2.3
                                               MetadataKey: FieldValue
                                               Properties:
+                                                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                                                BorderStyle: =BorderStyle.None
+                                                BorderThickness: =2
+                                                DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                                                DisabledFill: =RGBA(0, 0, 0, 0)
+                                                DisplayMode: =Parent.DisplayMode
+                                                FocusedBorderThickness: =4
+                                                Height: =AddPicture2.Height
+                                                HoverBorderColor: =RGBA(0, 0, 0, 0)
+                                                HoverFill: =RGBA(0, 0, 0, 0)
+                                                Image: =If(IsBlank(AddPicture2.Media), Parent.Default, AddPicture2.Media)
+                                                PressedBorderColor: =RGBA(0, 0, 0, 0)
+                                                PressedFill: =RGBA(0, 0, 0, 0)
+                                                Tooltip: =Parent.DisplayName
+                                                Width: =AddPicture2.Width
+                                                X: =AddPicture2.X
+                                                Y: =AddPicture2.Y
+                                          - AddPicture2:
+                                              Control: AddMedia@2.2.1
+                                              MetadataKey: AddPicture
+                                              Properties:
+                                                BorderColor: =RGBA(0, 0, 0, 0)
+                                                BorderStyle: =BorderStyle.None
+                                                BorderThickness: =2
+                                                Color: =RGBA(255, 255, 255, 1)
+                                                DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                                                DisabledColor: =RGBA(161, 159, 157, 1)
+                                                DisabledFill: =RGBA(242, 242, 241, 0)
+                                                Fill: =RGBA(0, 120, 212, 1)
+                                                FocusedBorderThickness: =4
+                                                Font: =Font.'Segoe UI'
+                                                Height: =200
+                                                HoverBorderColor: =RGBA(0, 0, 0, 0)
+                                                HoverColor: =RGBA(255, 255, 255, 1)
+                                                HoverFill: =RGBA(16, 110, 190, 1)
+                                                PressedBorderColor: =RGBA(0, 69, 120, 1)
+                                                PressedColor: =RGBA(255, 255, 255, 1)
+                                                PressedFill: =RGBA(16, 110, 190, 1)
+                                                Size: =15
+                                                Width: =Parent.Width - 60
+                                                X: =30
+                                                Y: =DataCardKey8.Y + DataCardKey8.Height + 5
+                                          - ErrorMessage13:
+                                              Control: Label@2.5.1
+                                              MetadataKey: ErrorMessage
+                                              Properties:
                                                 AutoHeight: =true
+                                                BorderColor: =RGBA(0, 0, 0, 0)
+                                                BorderStyle: =BorderStyle.None
+                                                BorderThickness: =2
+                                                Color: =RGBA(168, 0, 0, 1)
+                                                DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                                                DisabledColor: =RGBA(168, 0, 0, 1)
+                                                FocusedBorderThickness: =4
+                                                Font: =Font.'Segoe UI'
+                                                FontWeight: =FontWeight.Semibold
+                                                Height: =10
+                                                Live: =Live.Assertive
+                                                PaddingBottom: =0
+                                                PaddingLeft: =0
+                                                PaddingRight: =0
+                                                PaddingTop: =0
+                                                Text: =Parent.Error
+                                                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                                                Width: =Parent.Width - 60
+                                                X: =30
+                                                Y: =Image4.Y + Image4.Height
+                                          - StarVisible13:
+                                              Control: Label@2.5.1
+                                              MetadataKey: FieldRequired
+                                              Properties:
+                                                Align: =Align.Center
                                                 BorderColor: =RGBA(0, 0, 0, 0)
                                                 BorderStyle: =BorderStyle.None
                                                 BorderThickness: =2
                                                 Color: =RGBA(50, 49, 48, 1)
                                                 DisabledBorderColor: =RGBA(0, 0, 0, 0)
                                                 DisabledColor: =RGBA(161, 159, 157, 1)
-                                                DisplayMode: =Parent.DisplayMode
                                                 FocusedBorderThickness: =4
                                                 Font: =Font.'Segoe UI'
-                                                Height: =27
+                                                FontWeight: =FontWeight.Semibold
+                                                Height: =DataCardKey8.Height
                                                 PaddingLeft: =0
-                                                PaddingRight: =0
-                                                PaddingTop: =0
-                                                Text: =Parent.Default
-                                                Width: =Parent.Width - 60
-                                                X: =30
-                                                Y: =DataCardKey8.Y + DataCardKey8.Height + 5
+                                                Text: ="*"
+                                                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                                                Width: =30
+                                                Wrap: =false
+                                                Y: =DataCardKey8.Y
                                     - QRCodeImage_DataCard1:
                                         Control: TypedDataCard@1.0.7
                                         Variant: ClassicLargePicture
@@ -1366,7 +1437,7 @@ Screens:
                                           BorderColor: =RGBA(245, 245, 245, 1)
                                           DataField: ="tkr_qrcodeimage"
                                           Default: =ThisItem.QRCodeImage
-                                          DisplayName: =DataSourceInfo([@Equipment],DataSourceInfo.DisplayName,'tkr_qrcodeimage')
+                                          DisplayName: =DataSourceInfo([@Equipment],DataSourceInfo.DisplayName,QRCodeImage)
                                           Required: =false
                                           Update: =Image2.Image
                                           Width: =458
