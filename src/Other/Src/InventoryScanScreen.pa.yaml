@@ -17,14 +17,15 @@ Screens:
           Variant: AutoLayout
           Properties:
             Fill: =RGBA(245, 245, 245, 1)
-            Height: =Parent.Height
+            Height: =768
             LayoutDirection: =LayoutDirection.Vertical
             LayoutGap: =16
             PaddingBottom: =16
             PaddingLeft: =16
-            PaddingRight: =16
-            PaddingTop: =16
-            Width: =Parent.Width
+            PaddingRight: =8.10
+            PaddingTop: =8.10
+            Width: =690.98
+            X: =0.00
           Children:
             - HeaderContainer1_1:
                 Control: GroupContainer@1.3.0
@@ -34,15 +35,21 @@ Screens:
                   FillPortions: =0
                   Height: =75
                   LayoutDirection: =LayoutDirection.Horizontal
+                  PaddingRight: =0.00
+                  PaddingTop: =0.00
                   RadiusBottomLeft: =8
                   RadiusBottomRight: =8
                   RadiusTopLeft: =8
                   RadiusTopRight: =8
+                  Width: =668.48
+                  X: =14.40
                 Children:
                   - Header1_1:
                       Control: Header@0.0.44
                       Properties:
                         Title: ="QRコードスキャン画面"
+                        Width: =674.79
+                        X: =0.00
             - Container1_2:
                 Control: GroupContainer@1.3.0
                 Variant: AutoLayout
@@ -57,16 +64,21 @@ Screens:
                   LayoutOverflowY: =LayoutOverflow.Scroll
                   PaddingBottom: =10
                   PaddingLeft: =5
-                  PaddingRight: =5
-                  PaddingTop: =10
+                  PaddingRight: =2.53
+                  PaddingTop: =5.06
+                  Width: =668.48
+                  X: =14.40
                 Children:
                   - BarcodeScanner1:
                       Control: BarcodeReader@1.0.24
                       Properties:
                         Height: =200
                         OnScan: "=// OnScanイベントのコード\r\n// まず、バーコードが読み取れたかチェック\r\nIf(\r\n    CountRows(Self.Barcodes) > 0,\r\n    \r\n    // バーコードが読み取れた場合\r\n    // 最初のバーコードの値を変数に保存\r\n    Set(gblScannedValue, First(Self.Barcodes).Value);\r\n    \r\n    // デバッグ用：スキャンした値を確認\r\n    Notify(\"スキャンしたコード: \" & gblScannedValue, NotificationType.Information);\r\n    \r\n    // 該当する備品を検索\r\n    Set(\r\n        gblScannedEquipment,\r\n        LookUp(\r\n            Equipment,\r\n            EquipmentCode = gblScannedValue\r\n        )\r\n    );\r\n    \r\n    // 備品が見つかったかどうかで処理を分岐\r\n    If(\r\n        !IsBlank(gblScannedEquipment),\r\n        // 備品が見つかった場合\r\n        Navigate(\r\n            'InventoryHistoryScreen',\r\n            ScreenTransition.None,\r\n            {\r\n                NewInventoryMode: true,\r\n                SelectedEquipment: gblScannedEquipment\r\n            }\r\n        ),\r\n        // 備品が見つからなかった場合\r\n        Notify(\r\n            \"備品が見つかりません: \" & gblScannedValue,\r\n            NotificationType.Error\r\n        )\r\n    ),\r\n    \r\n    // バーコードが読み取れなかった場合\r\n    Notify(\r\n        \"バーコードを読み取れませんでした。もう一度お試しください。\",\r\n        NotificationType.Warning\r\n    )\r\n)"
+                        PaddingRight: =2.53
+                        PaddingTop: =2.53
                         Text: ="スキャンを実行"
-                        Width: =400
+                        Width: =202.34
+                        X: =233.92
                   - Label1:
                       Control: Label@2.5.1
                       Properties:
@@ -79,4 +91,32 @@ Screens:
                         Fill: =RGBA(187, 221, 140, 1)
                         FocusedBorderThickness: =4
                         Font: =Font.'Segoe UI'
+                        PaddingRight: =2.53
+                        PaddingTop: =2.53
+                        Size: =6.58
                         Text: =gblScannedValue
+                        Width: =75.87
+                        X: =296.90
+      - Icon1_1:
+          Control: Classic/Icon@2.5.0
+          Properties:
+            BorderColor: =RGBA(0, 0, 0, 0)
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledBorderColor: =RGBA(245, 245, 245, 1)
+            DisabledColor: =RGBA(225, 223, 221, 1)
+            DisabledFill: =RGBA(0, 0, 0, 0)
+            FocusedBorderThickness: =4
+            Height: =27
+            HoverBorderColor: =RGBA(0, 0, 0, 0)
+            HoverColor: =RGBA(16, 110, 190, 1)
+            HoverFill: =RGBA(0, 0, 0, 0)
+            Icon: =Icon.BackArrow
+            OnSelect: =Back()
+            PaddingRight: =0.00
+            PaddingTop: =0.00
+            PressedBorderColor: =RGBA(0, 0, 0, 0)
+            PressedColor: =RGBA(16, 110, 190, 1)
+            PressedFill: =RGBA(0, 0, 0, 0)
+            Width: =26.09
+            X: =593.81
+            Y: =35

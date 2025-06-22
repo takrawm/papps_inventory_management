@@ -10,13 +10,14 @@
         LayoutMode: =LayoutMode.Auto
         PaddingBottom: =16
         PaddingLeft: =16
-        PaddingRight: =16
-        PaddingTop: =16
+        PaddingRight: =8.10
+        PaddingTop: =8.10
         RadiusBottomLeft: =4
         RadiusBottomRight: =4
         RadiusTopLeft: =4
         RadiusTopRight: =4
-        Width: =Parent.Width
+        Width: =690.98
+        X: =0.00
         ZIndex: =1
 
         HeaderContainer1 As groupContainer.horizontalAutoLayoutContainer:
@@ -27,10 +28,14 @@
             LayoutMinHeight: =100
             LayoutMinWidth: =250
             LayoutMode: =LayoutMode.Auto
+            PaddingRight: =0.00
+            PaddingTop: =0.00
             RadiusBottomLeft: =8
             RadiusBottomRight: =8
             RadiusTopLeft: =8
             RadiusTopRight: =8
+            Width: =668.48
+            X: =14.40
             ZIndex: =2
 
             Header1 As ヘッダー​​:
@@ -39,13 +44,13 @@
                 LayoutMinHeight: =75
                 LayoutMinWidth: =Parent.Width
                 OnSelectLogo: =false
-                Title: ="ようこそ画面"
+                Title: ="ホーム画面"
                 UserEmail: =User().Email
                 UserImage: =User().Image
                 UserImageAltText: =User().FullName &" profile picture"
                 UserName: =User().FullName
-                Width: =Parent.Width
-                X: =0
+                Width: =674.79
+                X: =0.00
                 Y: =0
                 ZIndex: =3
 
@@ -60,8 +65,10 @@
             LayoutWrap: =true
             PaddingBottom: =2
             PaddingLeft: =2
-            PaddingRight: =2
-            PaddingTop: =2
+            PaddingRight: =1.01
+            PaddingTop: =1.01
+            Width: =668.48
+            X: =14.40
             ZIndex: =4
 
             Container1 As groupContainer.verticalAutoLayoutContainer:
@@ -77,12 +84,14 @@
                 LayoutOverflowY: =LayoutOverflow.Scroll
                 PaddingBottom: =10
                 PaddingLeft: =5
-                PaddingRight: =5
-                PaddingTop: =10
+                PaddingRight: =2.53
+                PaddingTop: =5.06
                 RadiusBottomLeft: =4
                 RadiusBottomRight: =4
                 RadiusTopLeft: =4
                 RadiusTopRight: =4
+                Width: =654.99
+                X: =1.80
                 ZIndex: =5
 
                 ImageContainer1 As groupContainer.verticalAutoLayoutContainer:
@@ -95,7 +104,10 @@
                     LayoutMinHeight: =100
                     LayoutMinWidth: =Container1.Width
                     LayoutMode: =LayoutMode.Auto
-                    Width: =Parent.Width
+                    PaddingRight: =0.00
+                    PaddingTop: =0.00
+                    Width: =219.02
+                    X: =218.63
                     ZIndex: =6
 
                     Image3 As image:
@@ -109,12 +121,16 @@
                         HoverFill: =RGBA(0, 0, 0, 0)
                         ImagePosition: =ImagePosition.Fill
                         OnSelect: =Navigate(EquipmentScreen)
+                        PaddingRight: =0.00
+                        PaddingTop: =0.00
                         PressedBorderColor: =RGBA(0, 0, 0, 0)
                         PressedFill: =RGBA(0, 0, 0, 0)
                         RadiusBottomLeft: =90
                         RadiusBottomRight: =90
                         RadiusTopLeft: =90
                         RadiusTopRight: =90
+                        Width: =50.58
+                        X: =84.57
                         ZIndex: =7
 
                 TitleContainer1 As groupContainer.verticalAutoLayoutContainer:
@@ -123,8 +139,10 @@
                     LayoutMinHeight: =100
                     LayoutMinWidth: =Container1.Width
                     LayoutMode: =LayoutMode.Auto
-                    PaddingTop: =20
-                    Width: =Parent.Width
+                    PaddingRight: =0.00
+                    PaddingTop: =10.11
+                    Width: =219.02
+                    X: =218.63
                     ZIndex: =8
 
                     FeatureItemButton1 As ボタン:
@@ -138,8 +156,8 @@
                         LayoutMinWidth: =Parent.Width
                         OnSelect: =Navigate(EquipmentScreen)
                         Text: ="Equipment"
-                        Width: =Parent.Width
-                        X: =0
+                        Width: =219.02
+                        X: =0.00
                         Y: =0
                         ZIndex: =9
 
@@ -150,11 +168,11 @@
                         Height: =32
                         LayoutMinHeight: =32
                         LayoutMinWidth: =Parent.Width
-                        Size: =16
+                        Size: =8.10
                         Text: =""
                         VerticalAlign: =VerticalAlign.Top
-                        Width: =Parent.Width
-                        X: =0
+                        Width: =219.02
+                        X: =0.00
                         Y: =0
                         ZIndex: =10
 
@@ -171,12 +189,14 @@
                 LayoutOverflowY: =LayoutOverflow.Scroll
                 PaddingBottom: =10
                 PaddingLeft: =5
-                PaddingRight: =5
-                PaddingTop: =10
+                PaddingRight: =2.53
+                PaddingTop: =5.06
                 RadiusBottomLeft: =4
                 RadiusBottomRight: =4
                 RadiusTopLeft: =4
                 RadiusTopRight: =4
+                Width: =654.99
+                X: =1.80
                 ZIndex: =5
 
                 ImageContainer1_1 As groupContainer.verticalAutoLayoutContainer:
@@ -189,7 +209,10 @@
                     LayoutMinHeight: =100
                     LayoutMinWidth: =Container1_1.Width
                     LayoutMode: =LayoutMode.Auto
-                    Width: =Parent.Width
+                    PaddingRight: =0.00
+                    PaddingTop: =0.00
+                    Width: =219.02
+                    X: =218.63
                     ZIndex: =6
 
                     Image3_1 As image:
@@ -203,12 +226,16 @@
                         HoverFill: =RGBA(0, 0, 0, 0)
                         ImagePosition: =ImagePosition.Fill
                         OnSelect: =Navigate(InventoryHistoryScreen)
+                        PaddingRight: =0.00
+                        PaddingTop: =0.00
                         PressedBorderColor: =RGBA(0, 0, 0, 0)
                         PressedFill: =RGBA(0, 0, 0, 0)
                         RadiusBottomLeft: =90
                         RadiusBottomRight: =90
                         RadiusTopLeft: =90
                         RadiusTopRight: =90
+                        Width: =50.58
+                        X: =84.57
                         ZIndex: =7
 
                 TitleContainer1_1 As groupContainer.verticalAutoLayoutContainer:
@@ -217,8 +244,10 @@
                     LayoutMinHeight: =100
                     LayoutMinWidth: =Container1_1.Width
                     LayoutMode: =LayoutMode.Auto
-                    PaddingTop: =20
-                    Width: =Parent.Width
+                    PaddingRight: =0.00
+                    PaddingTop: =10.11
+                    Width: =219.02
+                    X: =218.63
                     ZIndex: =8
 
                     FeatureItemButton1_1 As ボタン:
@@ -232,8 +261,8 @@
                         LayoutMinWidth: =Parent.Width
                         OnSelect: =Navigate(InventoryHistoryScreen)
                         Text: ="InventoryHistory"
-                        Width: =Parent.Width
-                        X: =0
+                        Width: =219.02
+                        X: =0.00
                         Y: =0
                         ZIndex: =9
 
@@ -244,11 +273,141 @@
                         Height: =32
                         LayoutMinHeight: =32
                         LayoutMinWidth: =Parent.Width
-                        Size: =16
+                        Size: =8.10
                         Text: =""
                         VerticalAlign: =VerticalAlign.Top
-                        Width: =Parent.Width
-                        X: =0
+                        Width: =219.02
+                        X: =0.00
                         Y: =0
                         ZIndex: =10
+
+            Container2 As groupContainer.verticalAutoLayoutContainer:
+                DropShadow: =DropShadow.Light
+                Fill: =RGBA(255, 255, 255, 1)
+                LayoutAlignItems: =LayoutAlignItems.Center
+                LayoutDirection: =LayoutDirection.Vertical
+                LayoutGap: =5
+                LayoutJustifyContent: =LayoutJustifyContent.Center
+                LayoutMinHeight: =300
+                LayoutMinWidth: =If(HomeScreen.Size = ScreenSize.Small, Parent.Width, 400)  // レスポンシブな幅設定
+                LayoutMode: =LayoutMode.Auto
+                PaddingRight: =0.00
+                PaddingTop: =0.00
+                RadiusBottomLeft: =4
+                RadiusBottomRight: =4
+                RadiusTopLeft: =4
+                RadiusTopRight: =4
+                Width: =654.99
+                X: =1.80
+                ZIndex: =6
+
+                ImageContainer1_2 As groupContainer.horizontalAutoLayoutContainer:
+                    AlignInContainer: =AlignInContainer.Center
+                    FillPortions: =1.5
+                    LayoutAlignItems: =LayoutAlignItems.Center
+                    LayoutDirection: =LayoutDirection.Vertical
+                    LayoutGap: =5
+                    LayoutJustifyContent: =LayoutJustifyContent.End
+                    LayoutMinHeight: =100
+                    LayoutMinWidth: =Container1_1.Width
+                    LayoutMode: =LayoutMode.Auto
+                    PaddingRight: =0.00
+                    PaddingTop: =0.00
+                    Width: =219.02
+                    X: =217.73
+                    ZIndex: =1
+
+                    Image3_2 As image:
+                        BorderColor: =RGBA(0, 0, 0, 0)
+                        BorderStyle: =BorderStyle.None
+                        BorderThickness: =2
+                        DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                        DisabledFill: =RGBA(0, 0, 0, 0)
+                        FocusedBorderThickness: =4
+                        HoverBorderColor: =RGBA(0, 0, 0, 0)
+                        HoverFill: =RGBA(0, 0, 0, 0)
+                        ImagePosition: =ImagePosition.Fill
+                        OnSelect: =Navigate(InventoryHistoryScreen)
+                        PaddingRight: =0.00
+                        PaddingTop: =0.00
+                        PressedBorderColor: =RGBA(0, 0, 0, 0)
+                        PressedFill: =RGBA(0, 0, 0, 0)
+                        RadiusBottomLeft: =90
+                        RadiusBottomRight: =90
+                        RadiusTopLeft: =90
+                        RadiusTopRight: =90
+                        Width: =50.58
+                        X: =84.57
+                        ZIndex: =1
+
+                TitleContainer1_2 As groupContainer.horizontalAutoLayoutContainer:
+                    AlignInContainer: =AlignInContainer.Center
+                    LayoutDirection: =LayoutDirection.Vertical
+                    LayoutMinHeight: =100
+                    LayoutMinWidth: =Container1_1.Width
+                    LayoutMode: =LayoutMode.Auto
+                    PaddingRight: =0.00
+                    PaddingTop: =10.11
+                    Width: =219.02
+                    X: =217.73
+                    ZIndex: =2
+
+                    FeatureItemButton1_2 As ボタン:
+                        AcceptsFocus: =true
+                        AccessibleLabel: ="おすすめアイテム ボタン"
+                        Align: =""
+                        Appearance: ='ButtonCanvas.Appearance'.Transparent
+                        BorderStyle: =""
+                        ContentLanguage: =""
+                        DisplayMode: =DisplayMode.Edit
+                        Font: =""
+                        FontItalic: =false
+                        FontSize: =20
+                        FontStrikethrough: =false
+                        FontUnderline: =false
+                        FontWeight: =FontWeight.Bold
+                        Height: =32
+                        Icon: =""
+                        IconRotation: =0
+                        IconStyle: ="Outline"
+                        Layout: ="Icon before"
+                        LayoutMinHeight: =32
+                        LayoutMinWidth: =Parent.Width
+                        OnSelect: =Navigate(InventoryScanScreen)
+                        TabIndex: =0
+                        Text: ="Scan"
+                        Tooltip: =""
+                        VerticalAlign: =""
+                        Visible: =true
+                        Width: =219.02
+                        X: =0.00
+                        Y: =0
+                        ZIndex: =1
+
+                    DescriptionText1_2 As テキスト:
+                        Align: ='TextCanvas.Align'.Center
+                        AutoHeight: =false
+                        BorderStyle: =""
+                        ContentLanguage: =""
+                        DisplayMode: =DisplayMode.Edit
+                        FillPortions: =1
+                        Font: =""
+                        FontItalic: =false
+                        FontStrikethrough: =false
+                        FontUnderline: =false
+                        Height: =32
+                        LayoutMinHeight: =32
+                        LayoutMinWidth: =Parent.Width
+                        Size: =8.10
+                        TabIndex: =0
+                        Text: =""
+                        Tooltip: =""
+                        VerticalAlign: =VerticalAlign.Top
+                        Visible: =true
+                        Weight: ="Regular"
+                        Width: =219.02
+                        Wrap: =true
+                        X: =0.00
+                        Y: =0
+                        ZIndex: =2
 
