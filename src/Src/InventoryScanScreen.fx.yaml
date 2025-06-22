@@ -4,54 +4,61 @@
     ScreenContainer3_1 As groupContainer.verticalAutoLayoutContainer:
         DropShadow: =DropShadow.Light
         Fill: =RGBA(245, 245, 245, 1)
-        Height: =768
+        Height: =Parent.Height
         LayoutDirection: =LayoutDirection.Vertical
         LayoutGap: =16
         LayoutMode: =LayoutMode.Auto
         PaddingBottom: =16
         PaddingLeft: =16
-        PaddingRight: =8.10
-        PaddingTop: =8.10
+        PaddingRight: =16
+        PaddingTop: =16
         RadiusBottomLeft: =4
         RadiusBottomRight: =4
         RadiusTopLeft: =4
         RadiusTopRight: =4
-        Width: =690.98
-        X: =0.00
+        Width: =Parent.Width
         ZIndex: =1
 
-        HeaderContainer1_1 As groupContainer.horizontalAutoLayoutContainer:
+        TableNameContainer2_1 As groupContainer.horizontalAutoLayoutContainer:
             DropShadow: =DropShadow.Light
-            Fill: =RGBA(255, 255, 255, 1)
             FillPortions: =0
-            Height: =75
+            Height: =68
+            LayoutAlignItems: =LayoutAlignItems.Center
             LayoutMinHeight: =100
             LayoutMinWidth: =250
             LayoutMode: =LayoutMode.Auto
-            PaddingRight: =0.00
-            PaddingTop: =0.00
-            RadiusBottomLeft: =8
-            RadiusBottomRight: =8
-            RadiusTopLeft: =8
-            RadiusTopRight: =8
-            Width: =668.48
-            X: =14.40
+            RadiusBottomLeft: =4
+            RadiusBottomRight: =4
+            RadiusTopLeft: =4
+            RadiusTopRight: =4
             ZIndex: =1
 
-            Header1_1 As ヘッダー​​:
-                DisplayMode: =DisplayMode.Edit
-                Height: =75
-                LayoutMinHeight: =75
-                LayoutMinWidth: =Parent.Width
-                OnSelectLogo: =false
-                Title: ="QRコードスキャン画面"
-                UserEmail: =User().Email
-                UserImage: =User().Image
-                UserImageAltText: =User().FullName &" profile picture"
-                UserName: =User().FullName
-                Width: =674.79
-                X: =0.00
-                Y: =0
+            TableNameLabel2_1 As label:
+                AlignInContainer: =AlignInContainer.Stretch
+                Color: =RGBA(255, 255, 255, 1)
+                Fill: =RGBA(0, 120, 212, 1)
+                FillPortions: =1
+                FontWeight: =FontWeight.Semibold
+                Height: =68
+                PaddingBottom: =16
+                PaddingLeft: =16
+                PaddingRight: =16
+                PaddingTop: =16
+                Size: =16
+                Text: =DataSourceInfo([@InventoryHistory], DataSourceInfo.DisplayName)
+                ZIndex: =1
+
+            HomeIconButton2_1 As icon:
+                AlignInContainer: =AlignInContainer.Stretch
+                Color: =RGBA(255, 255, 255, 1)
+                Fill: =RGBA(0, 120, 212, 1)
+                Icon: =Icon.Home
+                LayoutMinHeight: =32
+                OnSelect: =Back()
+                PaddingLeft: =5
+                PaddingRight: =15
+                TabIndex: =0
+                Width: =52
                 ZIndex: =2
 
         Container1_2 As groupContainer.verticalAutoLayoutContainer:
@@ -67,15 +74,13 @@
             LayoutOverflowY: =LayoutOverflow.Scroll
             PaddingBottom: =10
             PaddingLeft: =5
-            PaddingRight: =2.53
-            PaddingTop: =5.06
+            PaddingRight: =5
+            PaddingTop: =10
             RadiusBottomLeft: =4
             RadiusBottomRight: =4
             RadiusTopLeft: =4
             RadiusTopRight: =4
-            Width: =668.48
-            X: =14.40
-            ZIndex: =5
+            ZIndex: =2
 
             "BarcodeScanner1 As 'バーコード リーダー'":
                 BorderFillColor: =RGBA(47, 81, 151, 1)
@@ -92,61 +97,57 @@
                 LayoutMinWidth: =280
                 OnCancel: =false
                 OnScan: |-
-                    =// OnScanイベントのコード
-                    // まず、バーコードが読み取れたかチェック
-                    If(
-                        CountRows(Self.Barcodes) > 0,
-                        
-                        // バーコードが読み取れた場合
-                        // 最初のバーコードの値を変数に保存
-                        Set(gblScannedValue, First(Self.Barcodes).Value);
-                        
-                        // デバッグ用：スキャンした値を確認
-                        Notify("スキャンしたコード: " & gblScannedValue, NotificationType.Information);
-                        
-                        // 該当する備品を検索
-                        Set(
-                            gblScannedEquipment,
-                            LookUp(
-                                Equipment,
-                                EquipmentCode = gblScannedValue
-                            )
-                        );
-                        
-                        // 備品が見つかったかどうかで処理を分岐
-                        If(
-                            !IsBlank(gblScannedEquipment),
-                            // 備品が見つかった場合
-                            Navigate(
-                                'InventoryHistoryScreen',
-                                ScreenTransition.None,
-                                {
-                                    NewInventoryMode: true,
-                                    SelectedEquipment: gblScannedEquipment
-                                }
+                    =    If(
+                            CountRows(Self.Barcodes) > 0,
+                            
+                            // バーコードが読み取れた場合
+                            // 最初のバーコードの値を変数に保存
+                            Set(gblScannedValue, First(Self.Barcodes).Value);
+                            
+                            // デバッグ用：スキャンした値を確認
+                            Notify("スキャンしたコード: " & gblScannedValue, NotificationType.Information);
+                            
+                            // 該当する備品を検索
+                            Set(
+                                gblScannedEquipment,
+                                LookUp(
+                                    [@Equipment],
+                                    EquipmentCode = gblScannedValue
+                                )
+                            );
+                            
+                            // 備品が見つかったかどうかで処理を分岐
+                            If(
+                                !IsBlank(gblScannedEquipment),
+                                // 備品が見つかった場合
+                                Navigate(
+                                    EquipmentScreen,
+                                    ScreenTransition.None,
+                                    {
+                                        ScannedCode: gblScannedValue,
+                                        FromScanner: true
+                                    }
+                                ),
+                                // 備品が見つからなかった場合
+                                Notify(
+                                    "備品が見つかりません: " & gblScannedValue,
+                                    NotificationType.Error
+                                )
                             ),
-                            // 備品が見つからなかった場合
+                            
+                            // バーコードが読み取れなかった場合
                             Notify(
-                                "備品が見つかりません: " & gblScannedValue,
-                                NotificationType.Error
+                                "バーコードを読み取れませんでした。もう一度お試しください。",
+                                NotificationType.Warning
                             )
-                        ),
-                        
-                        // バーコードが読み取れなかった場合
-                        Notify(
-                            "バーコードを読み取れませんでした。もう一度お試しください。",
-                            NotificationType.Warning
                         )
-                    )
-                PaddingRight: =2.53
-                PaddingTop: =2.53
                 PressedBorderColor: =RGBA(56, 96, 178, 1)
                 PressedContentColor: =RGBA(56, 96, 178, 1)
                 PressedFillColor: =RGBA(255, 255, 255, 1)
                 Text: ="スキャンを実行"
                 TextColor: =RGBA(255, 255, 255, 1)
-                Width: =202.34
-                X: =233.92
+                Width: =400
+                X: =0
                 Y: =0
                 ZIndex: =1
 
@@ -160,34 +161,7 @@
                 Fill: =RGBA(187, 221, 140, 1)
                 FocusedBorderThickness: =4
                 Font: =Font.'Segoe UI'
-                PaddingRight: =2.53
-                PaddingTop: =2.53
-                Size: =6.58
+                Size: =13
                 Text: =gblScannedValue
-                Width: =75.87
-                X: =296.90
                 ZIndex: =2
-
-    Icon1_1 As icon:
-        BorderColor: =RGBA(0, 0, 0, 0)
-        Color: =RGBA(255, 255, 255, 1)
-        DisabledBorderColor: =RGBA(245, 245, 245, 1)
-        DisabledColor: =RGBA(225, 223, 221, 1)
-        DisabledFill: =RGBA(0, 0, 0, 0)
-        FocusedBorderThickness: =4
-        Height: =27
-        HoverBorderColor: =RGBA(0, 0, 0, 0)
-        HoverColor: =RGBA(16, 110, 190, 1)
-        HoverFill: =RGBA(0, 0, 0, 0)
-        Icon: =Icon.BackArrow
-        OnSelect: =Back()
-        PaddingRight: =0.00
-        PaddingTop: =0.00
-        PressedBorderColor: =RGBA(0, 0, 0, 0)
-        PressedColor: =RGBA(16, 110, 190, 1)
-        PressedFill: =RGBA(0, 0, 0, 0)
-        Width: =26.09
-        X: =593.81
-        Y: =35
-        ZIndex: =2
 

@@ -9,7 +9,7 @@
       "executionRestrictions": {
         "apiId": "unknown",
         "appVer": "3.25062.8",
-        "modifiedOn": "2025-06-22 15:25:28",
+        "modifiedOn": "2025-06-22 23:14:11",
         "policy": "{\"type\":\"unused\"}",
         "version": 1
       },
@@ -17,6 +17,7 @@
       "id": "/providers/microsoft.powerapps/apis/shared_commondataserviceforapps",
       "parameterHints": {},
       "parameterHintsV2": {},
+      "runtimePolicyName": "7097d6e3-be01-4597-aeb0-b32c5d07707b",
       "sharedConnectionId": "/providers/microsoft.powerapps/apis/shared_commondataserviceforapps/connections/shared-commondataser-7f3df033-5652-4622-9936-b26e6f2fac22",
       "xrmConnectionReferenceLogicalName": "new_sharedcommondataserviceforapps_ea7e9"
     },

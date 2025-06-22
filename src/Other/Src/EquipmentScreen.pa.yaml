@@ -11,6 +11,7 @@ Screens:
     Properties:
       Fill: =RGBA(255, 255, 255, 1)
       LoadingSpinnerColor: =RGBA(0, 120, 212, 1)
+      OnVisible: "=If(\r\n        Param(\"FromScanner\") = \"true\",\r\n        UpdateContext({\r\n            scannedSearchValue: Param(\"ScannedCode\"),\r\n            itemSelected: false,\r\n            editMode: false,\r\n            newMode: false,\r\n            deleteMode: false\r\n        });\r\n        \r\n        // 該当する備品を自動選択\r\n        Set(\r\n            varScannedItem,\r\n            LookUp([@Equipment], EquipmentCode = Param(\"ScannedCode\"))\r\n        );\r\n        \r\n        If(\r\n            !IsBlank(varScannedItem),\r\n            UpdateContext({\r\n                itemSelected: true,\r\n                CurrentItem: varScannedItem\r\n            })\r\n        ),\r\n        \r\n        // 通常の遷移の場合は検索をクリア\r\n        UpdateContext({\r\n            scannedSearchValue: \"\",\r\n            itemSelected: false\r\n        })\r\n    )"
     Children:
       - ScreenContainer1:
           Control: GroupContainer@1.3.0
@@ -24,14 +25,13 @@ Screens:
             LayoutGap: =15
             PaddingBottom: =16
             PaddingLeft: =16
-            PaddingRight: =8.10
-            PaddingTop: =8.10
+            PaddingRight: =16
+            PaddingTop: =16
             RadiusBottomLeft: =0
             RadiusBottomRight: =0
             RadiusTopLeft: =0
             RadiusTopRight: =0
-            Width: =690.98
-            X: =0.00
+            Width: =Parent.Width
           Children:
             - TableNameContainer1:
                 Control: GroupContainer@1.3.0
@@ -41,10 +41,6 @@ Screens:
                   Height: =68
                   LayoutAlignItems: =LayoutAlignItems.Center
                   LayoutDirection: =LayoutDirection.Horizontal
-                  PaddingRight: =0.00
-                  PaddingTop: =0.00
-                  Width: =0.00
-                  X: =0.00
                 Children:
                   - TableNameLabel1:
                       Control: Label@2.5.1
@@ -60,12 +56,10 @@ Screens:
                         Height: =68
                         PaddingBottom: =16
                         PaddingLeft: =16
-                        PaddingRight: =8.10
-                        PaddingTop: =8.10
-                        Size: =8.10
+                        PaddingRight: =16
+                        PaddingTop: =16
+                        Size: =16
                         Text: =DataSourceInfo([@Equipment], DataSourceInfo.DisplayName)
-                        Width: =0.00
-                        X: =0.00
                   - HomeIconButton1:
                       Control: Classic/Icon@2.5.0
                       Properties:
@@ -77,13 +71,11 @@ Screens:
                         Fill: =RGBA(0, 120, 212, 1)
                         Icon: =Icon.Home
                         LayoutMinHeight: =32
-                        OnSelect: =Navigate(HomeScreen, Transition)
+                        OnSelect: =Back()
                         PaddingLeft: =5
-                        PaddingRight: =7.58
-                        PaddingTop: =0.00
+                        PaddingRight: =15
                         TabIndex: =0
-                        Width: =26.31
-                        X: =0.00
+                        Width: =52
             - BodyContainer1:
                 Control: GroupContainer@1.3.0
                 Variant: AutoLayout
@@ -93,14 +85,12 @@ Screens:
                   LayoutGap: =16
                   PaddingBottom: =2
                   PaddingLeft: =2
-                  PaddingRight: =1.01
-                  PaddingTop: =1.01
+                  PaddingRight: =2
+                  PaddingTop: =2
                   RadiusBottomLeft: =0
                   RadiusBottomRight: =0
                   RadiusTopLeft: =0
                   RadiusTopRight: =0
-                  Width: =0.00
-                  X: =0.00
                 Children:
                   - SidebarContainer1:
                       Control: GroupContainer@1.3.0
@@ -111,11 +101,9 @@ Screens:
                         LayoutDirection: =LayoutDirection.Vertical
                         LayoutGap: =10
                         PaddingLeft: =16
-                        PaddingRight: =8.10
-                        PaddingTop: =5.06
+                        PaddingRight: =16
+                        PaddingTop: =10
                         Visible: =If(And(EquipmentScreen.Size = ScreenSize.Small, Or(newMode, editMode, itemSelected)), false, true)
-                        Width: =0.00
-                        X: =0.00
                       Children:
                         - SearchContainer1:
                             Control: GroupContainer@1.3.0
@@ -127,14 +115,10 @@ Screens:
                               Height: =44
                               LayoutDirection: =LayoutDirection.Horizontal
                               LayoutMinWidth: =0
-                              PaddingRight: =0.00
-                              PaddingTop: =0.00
                               RadiusBottomLeft: =0
                               RadiusBottomRight: =0
                               RadiusTopLeft: =0
                               RadiusTopRight: =0
-                              Width: =0.00
-                              X: =0.00
                             Children:
                               - SearchInput1:
                                   Control: Classic/TextInput@2.3.2
@@ -143,7 +127,7 @@ Screens:
                                     BorderStyle: =BorderStyle.None
                                     BorderThickness: =1
                                     Color: =RGBA(70, 68, 64, 1)
-                                    Default: =""
+                                    Default: =If(!IsBlank(scannedSearchValue), scannedSearchValue, "")
                                     DisabledBorderColor: =ColorFade(Self.BorderColor, 40%)
                                     DisabledColor: =ColorFade(Self.Color, 40%)
                                     DisabledFill: =Self.Fill
@@ -157,12 +141,8 @@ Screens:
                                     HoverColor: =Self.Color
                                     HoverFill: =RGBA(0, 0, 0, 0)
                                     LayoutMinWidth: =0
-                                    PaddingRight: =2.53
-                                    PaddingTop: =2.53
                                     PressedFill: =RGBA(0, 0, 0, 0)
-                                    Size: =7.08
-                                    Width: =0.00
-                                    X: =0.00
+                                    Size: =14
                               - SearchIcon1:
                                   Control: Classic/Icon@2.5.0
                                   Properties:
@@ -174,10 +154,9 @@ Screens:
                                     Icon: =Icon.Search
                                     PaddingBottom: =10
                                     PaddingLeft: =10
-                                    PaddingRight: =5.06
-                                    PaddingTop: =5.06
-                                    Width: =22.26
-                                    X: =0.00
+                                    PaddingRight: =10
+                                    PaddingTop: =10
+                                    Width: =44
                         - NewRecordButtonBarContainer1:
                             Control: GroupContainer@1.3.0
                             Variant: AutoLayout
@@ -186,14 +165,10 @@ Screens:
                               FillPortions: =0
                               Height: =44
                               LayoutDirection: =LayoutDirection.Horizontal
-                              PaddingRight: =0.00
-                              PaddingTop: =0.00
                               RadiusBottomLeft: =0
                               RadiusBottomRight: =0
                               RadiusTopLeft: =0
                               RadiusTopRight: =0
-                              Width: =0.00
-                              X: =0.00
                             Children:
                               - NewRecordAddIcon1:
                                   Control: Classic/Icon@2.5.0
@@ -213,13 +188,12 @@ Screens:
                                       =NewForm(Form1); UpdateContext({ newMode: true });
                                     PaddingBottom: =10
                                     PaddingLeft: =10
-                                    PaddingRight: =5.06
-                                    PaddingTop: =5.06
+                                    PaddingRight: =10
+                                    PaddingTop: =10
                                     PressedBorderColor: =RGBA(0, 0, 0, 0)
                                     PressedColor: =RGBA(16, 110, 190, 1)
                                     PressedFill: =RGBA(0, 0, 0, 0)
-                                    Width: =22.26
-                                    X: =0.00
+                                    Width: =44
                               - NewRecordLabel1:
                                   Control: Label@2.5.1
                                   Properties:
@@ -233,12 +207,7 @@ Screens:
                                     FocusedBorderThickness: =4
                                     Font: =Font.'Segoe UI'
                                     Height: =44
-                                    PaddingRight: =2.53
-                                    PaddingTop: =2.53
-                                    Size: =6.58
                                     Text: ="新規"
-                                    Width: =0.00
-                                    X: =0.00
                         - RecordsListSeparator1:
                             Control: Rectangle@2.3.0
                             Properties:
@@ -253,8 +222,6 @@ Screens:
                               HoverFill: =RGBA(0, 120, 212, 1)
                               LayoutMinWidth: =200
                               PressedFill: =RGBA(0, 120, 212, 1)
-                              Width: =0.00
-                              X: =0.00
                         - RecordsGallery1:
                             Control: Gallery@2.15.0
                             Variant: BrowseLayout_Vertical_ThreeTextOneImageVariant_ver5.0
@@ -262,14 +229,32 @@ Screens:
                               BorderColor: =RGBA(245, 245, 245, 1)
                               Default: =CurrentItem
                               Fill: =RGBA(250, 250, 250, 1)
-                              Items: =Search([@Equipment], SearchInput1.Text, EquipmentCode, FixedAssetNumber,SerialNumber)
+                              Items: |-
+                                =If(
+                                        !IsBlank(scannedSearchValue),
+                                        // スキャンからの遷移の場合は、完全一致で検索
+                                        Filter(
+                                            [@Equipment],
+                                            EquipmentCode = scannedSearchValue
+                                        ),
+                                        // 通常の検索
+                                        If(
+                                            !IsBlank(SearchInput1.Text),
+                                            Search(
+                                                [@Equipment], 
+                                                SearchInput1.Text, 
+                                                EquipmentCode, 
+                                                FixedAssetNumber,
+                                                SerialNumber
+                                            ),
+                                            [@Equipment]
+                                        )
+                                    )
                               LayoutMinWidth: =0
                               OnSelect: |-
                                 =UpdateContext({ itemSelected: true, CurrentItem: ThisItem })
                               TemplateFill: =If(ThisItem.IsSelected, RGBA(230, 230, 230, 1), RGBA(0, 0, 0, 0))
                               TemplateSize: =104
-                              Width: =0.00
-                              X: =0.00
                             Children:
                               - Image1:
                                   Control: Image@2.2.3
@@ -283,18 +268,16 @@ Screens:
                                     Height: =84
                                     HoverBorderColor: =RGBA(0, 0, 0, 0)
                                     HoverFill: =RGBA(0, 0, 0, 0)
-                                    Image: =ThisItem.QRCodeImage
+                                    Image: =ThisItem.EquipmentPhoto
                                     OnSelect: =Select(Parent)
-                                    PaddingRight: =0.00
-                                    PaddingTop: =0.00
                                     PressedBorderColor: =RGBA(0, 0, 0, 0)
                                     PressedFill: =RGBA(0, 0, 0, 0)
                                     RadiusBottomLeft: =8
                                     RadiusBottomRight: =8
                                     RadiusTopLeft: =8
                                     RadiusTopRight: =8
-                                    Width: =42.49
-                                    X: =8.10
+                                    Width: =84
+                                    X: =16
                                     Y: =(Parent.TemplateHeight / 2) - (Self.Height / 2)
                               - Title1:
                                   Control: Label@2.5.1
@@ -308,13 +291,13 @@ Screens:
                                     OnSelect: =Select(Parent)
                                     PaddingBottom: =0
                                     PaddingLeft: =12
-                                    PaddingRight: =0.00
-                                    PaddingTop: =0.00
-                                    Size: =7.08
+                                    PaddingRight: =0
+                                    PaddingTop: =0
+                                    Size: =14
                                     Text: =ThisItem.EquipmentCode
                                     VerticalAlign: =VerticalAlign.Top
-                                    Width: =89.53
-                                    X: =58.18
+                                    Width: =Parent.TemplateWidth - 185
+                                    X: =115
                                     Y: =(Parent.TemplateHeight - (Self.Size*1.8 + Subtitle1.Size*1.8 + 2 + Body1.Size*1.8)) / 2
                               - Subtitle1:
                                   Control: Label@2.5.1
@@ -328,13 +311,13 @@ Screens:
                                     OnSelect: =Select(Parent)
                                     PaddingBottom: =0
                                     PaddingLeft: =12
-                                    PaddingRight: =0.00
-                                    PaddingTop: =0.00
-                                    Size: =6.07
-                                    Text: =ThisItem.SerialNumber
+                                    PaddingRight: =0
+                                    PaddingTop: =0
+                                    Size: =12
+                                    Text: =ThisItem.FixedAssetNumber
                                     VerticalAlign: =VerticalAlign.Top
-                                    Width: =89.53
-                                    X: =58.18
+                                    Width: =Title1.Width
+                                    X: =Title1.X
                                     Y: =Title1.Y + Title1.Height
                               - Body1:
                                   Control: Label@2.5.1
@@ -348,13 +331,13 @@ Screens:
                                     OnSelect: =Select(Parent)
                                     PaddingBottom: =0
                                     PaddingLeft: =12
-                                    PaddingRight: =0.00
-                                    PaddingTop: =0.00
-                                    Size: =6.07
-                                    Text: =ThisItem.FixedAssetNumber
+                                    PaddingRight: =0
+                                    PaddingTop: =0
+                                    Size: =12
+                                    Text: =ThisItem.SerialNumber
                                     VerticalAlign: =VerticalAlign.Top
-                                    Width: =89.53
-                                    X: =58.18
+                                    Width: =Subtitle1.Width
+                                    X: =Title1.X
                                     Y: =Subtitle1.Y + Subtitle1.Height
                               - NextArrow1:
                                   Control: Classic/Icon@2.5.0
@@ -374,14 +357,14 @@ Screens:
                                     OnSelect: =Select(Parent)
                                     PaddingBottom: =16
                                     PaddingLeft: =16
-                                    PaddingRight: =8.10
-                                    PaddingTop: =8.10
+                                    PaddingRight: =16
+                                    PaddingTop: =16
                                     PressedBorderColor: =RGBA(0, 0, 0, 0)
                                     PressedColor: =RGBA(16, 110, 190, 1)
                                     PressedFill: =RGBA(0, 0, 0, 0)
                                     Tooltip: ="項目の詳細の表示"
-                                    Width: =25.29
-                                    X: =151.75
+                                    Width: =50
+                                    X: =Parent.TemplateWidth - Self.Width - 12
                                     Y: =(Parent.TemplateHeight / 2) - (Self.Height / 2)
                               - Separator1:
                                   Control: Rectangle@2.3.0
@@ -390,8 +373,7 @@ Screens:
                                     Fill: =RGBA(255, 255, 255, 1)
                                     Height: =8
                                     OnSelect: =Select(Parent)
-                                    Width: =183.12
-                                    X: =0.00
+                                    Width: =Parent.TemplateWidth
                                     Y: =Parent.TemplateHeight - Self.Height
                               - Rectangle1:
                                   Control: Rectangle@2.3.0
@@ -401,8 +383,7 @@ Screens:
                                     Height: =Parent.TemplateHeight - Separator1.Height
                                     OnSelect: =Select(Parent)
                                     Visible: =ThisItem.IsSelected
-                                    Width: =2.02
-                                    X: =0.00
+                                    Width: =4
                   - RightContainer1:
                       Control: GroupContainer@1.3.0
                       Variant: AutoLayout
@@ -414,15 +395,14 @@ Screens:
                         LayoutGap: =16
                         PaddingBottom: =2
                         PaddingLeft: =2
-                        PaddingRight: =1.01
-                        PaddingTop: =1.01
+                        PaddingRight: =2
+                        PaddingTop: =2
                         RadiusBottomLeft: =0
                         RadiusBottomRight: =0
                         RadiusTopLeft: =0
                         RadiusTopRight: =0
                         Visible: =If(Or(deleteMode, And(EquipmentScreen.Size = ScreenSize.Small, !newMode, !editMode, !itemSelected)), false, true)
-                        Width: =0.00
-                        X: =0.00
+                        Width: =0
                       Children:
                         - SelectedRecordHeaderContainer1:
                             Control: GroupContainer@1.3.0
@@ -433,10 +413,6 @@ Screens:
                               Height: =50
                               LayoutAlignItems: =LayoutAlignItems.Center
                               LayoutDirection: =LayoutDirection.Horizontal
-                              PaddingRight: =0.00
-                              PaddingTop: =0.00
-                              Width: =0.00
-                              X: =0.00
                             Children:
                               - BackIconButton1:
                                   Control: Classic/Icon@2.5.0
@@ -456,15 +432,14 @@ Screens:
                                       =UpdateContext({ itemSelected: false })
                                     PaddingBottom: =12
                                     PaddingLeft: =12
-                                    PaddingRight: =6.07
-                                    PaddingTop: =6.07
+                                    PaddingRight: =12
+                                    PaddingTop: =12
                                     PressedBorderColor: =RGBA(0, 0, 0, 0)
                                     PressedColor: =RGBA(16, 110, 190, 1)
                                     PressedFill: =RGBA(0, 0, 0, 0)
                                     TabIndex: =0
                                     Visible: =If(EquipmentScreen.Size = ScreenSize.Small, And(!editMode, !newMode, !deleteMode), false)
-                                    Width: =25.29
-                                    X: =0.00
+                                    Width: =50
                               - SelectedRecordTitle1:
                                   Control: Label@2.5.1
                                   Properties:
@@ -480,12 +455,7 @@ Screens:
                                     Font: =Font.'Segoe UI'
                                     FontWeight: =FontWeight.Semibold
                                     PaddingLeft: =30
-                                    PaddingRight: =2.53
-                                    PaddingTop: =2.53
-                                    Size: =6.58
                                     Text: =RecordsGallery1.Selected.EquipmentCode
-                                    Width: =0.00
-                                    X: =0.00
                               - SubmitFormButton1:
                                   Control: Classic/Icon@2.5.0
                                   Properties:
@@ -503,15 +473,14 @@ Screens:
                                     OnSelect: =SubmitForm(Form1)
                                     PaddingBottom: =12
                                     PaddingLeft: =12
-                                    PaddingRight: =6.07
-                                    PaddingTop: =6.07
+                                    PaddingRight: =12
+                                    PaddingTop: =12
                                     PressedBorderColor: =RGBA(0, 0, 0, 0)
                                     PressedColor: =RGBA(16, 110, 190, 1)
                                     PressedFill: =RGBA(0, 0, 0, 0)
                                     TabIndex: =0
                                     Visible: =Or(editMode, newMode)
-                                    Width: =25.29
-                                    X: =0.00
+                                    Width: =50
                               - ResetFormButton1:
                                   Control: Classic/Icon@2.5.0
                                   Properties:
@@ -530,15 +499,14 @@ Screens:
                                       =ResetForm(Form1); UpdateContext({ editMode: false, newMode: false });
                                     PaddingBottom: =12
                                     PaddingLeft: =12
-                                    PaddingRight: =6.07
-                                    PaddingTop: =6.07
+                                    PaddingRight: =12
+                                    PaddingTop: =12
                                     PressedBorderColor: =RGBA(0, 0, 0, 0)
                                     PressedColor: =RGBA(16, 110, 190, 1)
                                     PressedFill: =RGBA(0, 0, 0, 0)
                                     TabIndex: =0
                                     Visible: =Or(editMode, newMode)
-                                    Width: =25.29
-                                    X: =0.00
+                                    Width: =50
                               - EditIconButton1:
                                   Control: Classic/Icon@2.5.0
                                   Properties:
@@ -557,15 +525,14 @@ Screens:
                                       =UpdateContext({ editMode: true, selectedRecord: RecordsGallery1.Selected })
                                     PaddingBottom: =12
                                     PaddingLeft: =12
-                                    PaddingRight: =6.07
-                                    PaddingTop: =6.07
+                                    PaddingRight: =12
+                                    PaddingTop: =12
                                     PressedBorderColor: =RGBA(0, 0, 0, 0)
                                     PressedColor: =RGBA(16, 110, 190, 1)
                                     PressedFill: =RGBA(0, 0, 0, 0)
                                     TabIndex: =0
                                     Visible: =And(!editMode, !newMode, !deleteMode)
-                                    Width: =25.29
-                                    X: =0.00
+                                    Width: =50
                               - DeleteIconButton1:
                                   Control: Classic/Icon@2.5.0
                                   Properties:
@@ -584,25 +551,20 @@ Screens:
                                       =UpdateContext({ deleteMode: true, deleteCancelled: false, selectedRecord: RecordsGallery1.Selected })
                                     PaddingBottom: =12
                                     PaddingLeft: =12
-                                    PaddingRight: =6.07
-                                    PaddingTop: =6.07
+                                    PaddingRight: =12
+                                    PaddingTop: =12
                                     PressedBorderColor: =RGBA(0, 0, 0, 0)
                                     PressedColor: =RGBA(16, 110, 190, 1)
                                     PressedFill: =RGBA(0, 0, 0, 0)
                                     TabIndex: =0
                                     Visible: =And(!editMode, !newMode, !deleteMode)
-                                    Width: =25.29
-                                    X: =0.00
+                                    Width: =50
                         - MainContainer1:
                             Control: GroupContainer@1.3.0
                             Variant: AutoLayout
                             Properties:
                               Fill: =RGBA(255, 255, 255, 1)
                               LayoutDirection: =LayoutDirection.Vertical
-                              PaddingRight: =0.00
-                              PaddingTop: =0.00
-                              Width: =0.00
-                              X: =0.00
                             Children:
                               - Form1:
                                   Control: Form@2.4.4
@@ -618,8 +580,6 @@ Screens:
                                     OnFailure: =Notify("保存できません。フォームにエラーがないか確認してください。", NotificationType.Error)
                                     OnSuccess: |-
                                       =UpdateContext({ CurrentItem: Self.LastSubmit, editMode: false, newMode: false })
-                                    Width: =0.00
-                                    X: =0.00
                                   Children:
                                     - EquipmentCode_DataCard1:
                                         Control: TypedDataCard@1.0.7
@@ -631,7 +591,7 @@ Screens:
                                           Default: =ThisItem.EquipmentCode
                                           DisplayName: =DataSourceInfo([@Equipment],DataSourceInfo.DisplayName,EquipmentCode)
                                           Required: =false
-                                          Width: =0
+                                          Width: =458
                                           X: =0
                                           Y: =0
                                         Children:
@@ -651,13 +611,10 @@ Screens:
                                                 FontWeight: =FontWeight.Semibold
                                                 Height: =34
                                                 PaddingLeft: =0
-                                                PaddingRight: =2.53
-                                                PaddingTop: =2.53
-                                                Size: =6.58
                                                 Text: =Parent.DisplayName
-                                                Width: =201.33
+                                                Width: =Parent.Width - 60
                                                 Wrap: =false
-                                                X: =15.18
+                                                X: =30
                                                 Y: =10
                                           - DataCardValue1:
                                               Control: Label@2.5.1
@@ -675,12 +632,11 @@ Screens:
                                                 Font: =Font.'Segoe UI'
                                                 Height: =27
                                                 PaddingLeft: =0
-                                                PaddingRight: =0.00
-                                                PaddingTop: =0.00
-                                                Size: =6.58
+                                                PaddingRight: =0
+                                                PaddingTop: =0
                                                 Text: =Parent.Default
-                                                Width: =201.33
-                                                X: =15.18
+                                                Width: =Parent.Width - 60
+                                                X: =30
                                                 Y: =DataCardKey1.Y + DataCardKey1.Height + 5
                                     - EquipmentType_DataCard1:
                                         Control: TypedDataCard@1.0.7
@@ -693,7 +649,7 @@ Screens:
                                           DisplayName: =DataSourceInfo([@Equipment],DataSourceInfo.DisplayName,EquipmentType)
                                           Required: =true
                                           Update: =DataCardValue2.Selected.Value
-                                          Width: =0
+                                          Width: =458
                                           X: =1
                                           Y: =0
                                         Children:
@@ -713,13 +669,10 @@ Screens:
                                                 FontWeight: =FontWeight.Semibold
                                                 Height: =34
                                                 PaddingLeft: =0
-                                                PaddingRight: =2.53
-                                                PaddingTop: =2.53
-                                                Size: =6.58
                                                 Text: =Parent.DisplayName
-                                                Width: =201.33
+                                                Width: =Parent.Width - 60
                                                 Wrap: =false
-                                                X: =15.18
+                                                X: =30
                                                 Y: =10
                                           - DataCardValue2:
                                               Control: Classic/ComboBox@2.4.0
@@ -747,8 +700,6 @@ Screens:
                                                 IsSearchable: =false
                                                 Items: =Choices('EquipmentType')
                                                 PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
-                                                PaddingRight: =2.53
-                                                PaddingTop: =2.53
                                                 PressedBorderColor: =RGBA(16, 110, 190, 1)
                                                 PressedColor: =RGBA(255, 255, 255, 1)
                                                 PressedFill: =RGBA(0, 120, 212, 1)
@@ -756,10 +707,9 @@ Screens:
                                                 SelectMultiple: =false
                                                 SelectionColor: =RGBA(255, 255, 255, 1)
                                                 SelectionFill: =RGBA(0, 120, 212, 1)
-                                                Size: =6.58
                                                 Tooltip: =Parent.DisplayName
-                                                Width: =201.33
-                                                X: =15.18
+                                                Width: =Parent.Width - 60
+                                                X: =30
                                                 Y: =DataCardKey2.Y + DataCardKey2.Height + 5
                                           - ErrorMessage1:
                                               Control: Label@2.5.1
@@ -779,13 +729,12 @@ Screens:
                                                 Live: =Live.Assertive
                                                 PaddingBottom: =0
                                                 PaddingLeft: =0
-                                                PaddingRight: =0.00
-                                                PaddingTop: =0.00
-                                                Size: =6.58
+                                                PaddingRight: =0
+                                                PaddingTop: =0
                                                 Text: =Parent.Error
                                                 Visible: =Parent.DisplayMode=DisplayMode.Edit
-                                                Width: =201.33
-                                                X: =15.18
+                                                Width: =Parent.Width - 60
+                                                X: =30
                                                 Y: =DataCardValue2.Y + DataCardValue2.Height
                                           - StarVisible1:
                                               Control: Label@2.5.1
@@ -803,14 +752,10 @@ Screens:
                                                 FontWeight: =FontWeight.Semibold
                                                 Height: =DataCardKey2.Height
                                                 PaddingLeft: =0
-                                                PaddingRight: =2.53
-                                                PaddingTop: =2.53
-                                                Size: =6.58
                                                 Text: ="*"
                                                 Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
-                                                Width: =15.18
+                                                Width: =30
                                                 Wrap: =false
-                                                X: =0.00
                                                 Y: =DataCardKey2.Y
                                     - SerialNumber_DataCard1:
                                         Control: TypedDataCard@1.0.7
@@ -824,7 +769,7 @@ Screens:
                                           MaxLength: =DataSourceInfo([@Equipment], DataSourceInfo.MaxLength, SerialNumber)
                                           Required: =false
                                           Update: =DataCardValue3.Text
-                                          Width: =0
+                                          Width: =458
                                           X: =0
                                           Y: =1
                                         Children:
@@ -844,13 +789,10 @@ Screens:
                                                 FontWeight: =FontWeight.Semibold
                                                 Height: =34
                                                 PaddingLeft: =0
-                                                PaddingRight: =2.53
-                                                PaddingTop: =2.53
-                                                Size: =6.58
                                                 Text: =Parent.DisplayName
-                                                Width: =201.33
+                                                Width: =Parent.Width - 60
                                                 Wrap: =false
-                                                X: =15.18
+                                                X: =30
                                                 Y: =10
                                           - DataCardValue3:
                                               Control: Classic/TextInput@2.3.2
@@ -870,8 +812,6 @@ Screens:
                                                 HoverFill: =RGBA(255, 255, 255, 1)
                                                 MaxLength: =Parent.MaxLength
                                                 PaddingLeft: =5
-                                                PaddingRight: =2.53
-                                                PaddingTop: =2.53
                                                 PressedBorderColor: =RGBA(0, 120, 212, 1)
                                                 PressedColor: =RGBA(50, 49, 48, 1)
                                                 PressedFill: =RGBA(255, 255, 255, 1)
@@ -879,10 +819,9 @@ Screens:
                                                 RadiusBottomRight: =0
                                                 RadiusTopLeft: =0
                                                 RadiusTopRight: =0
-                                                Size: =6.58
                                                 Tooltip: =Parent.DisplayName
-                                                Width: =201.33
-                                                X: =15.18
+                                                Width: =Parent.Width - 60
+                                                X: =30
                                                 Y: =DataCardKey3.Y + DataCardKey3.Height + 5
                                           - ErrorMessage2:
                                               Control: Label@2.5.1
@@ -902,13 +841,12 @@ Screens:
                                                 Live: =Live.Assertive
                                                 PaddingBottom: =0
                                                 PaddingLeft: =0
-                                                PaddingRight: =0.00
-                                                PaddingTop: =0.00
-                                                Size: =6.58
+                                                PaddingRight: =0
+                                                PaddingTop: =0
                                                 Text: =Parent.Error
                                                 Visible: =Parent.DisplayMode=DisplayMode.Edit
-                                                Width: =201.33
-                                                X: =15.18
+                                                Width: =Parent.Width - 60
+                                                X: =30
                                                 Y: =DataCardValue3.Y + DataCardValue3.Height
                                           - StarVisible2:
                                               Control: Label@2.5.1
@@ -926,14 +864,10 @@ Screens:
                                                 FontWeight: =FontWeight.Semibold
                                                 Height: =DataCardKey3.Height
                                                 PaddingLeft: =0
-                                                PaddingRight: =2.53
-                                                PaddingTop: =2.53
-                                                Size: =6.58
                                                 Text: ="*"
                                                 Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
-                                                Width: =15.18
+                                                Width: =30
                                                 Wrap: =false
-                                                X: =0.00
                                                 Y: =DataCardKey3.Y
                                     - FixedAssetNumber_DataCard1:
                                         Control: TypedDataCard@1.0.7
@@ -947,7 +881,7 @@ Screens:
                                           MaxLength: =DataSourceInfo([@Equipment], DataSourceInfo.MaxLength, FixedAssetNumber)
                                           Required: =false
                                           Update: =DataCardValue4.Text
-                                          Width: =0
+                                          Width: =458
                                           X: =1
                                           Y: =1
                                         Children:
@@ -967,13 +901,10 @@ Screens:
                                                 FontWeight: =FontWeight.Semibold
                                                 Height: =34
                                                 PaddingLeft: =0
-                                                PaddingRight: =2.53
-                                                PaddingTop: =2.53
-                                                Size: =6.58
                                                 Text: =Parent.DisplayName
-                                                Width: =201.33
+                                                Width: =Parent.Width - 60
                                                 Wrap: =false
-                                                X: =15.18
+                                                X: =30
                                                 Y: =10
                                           - DataCardValue4:
                                               Control: Classic/TextInput@2.3.2
@@ -993,8 +924,6 @@ Screens:
                                                 HoverFill: =RGBA(255, 255, 255, 1)
                                                 MaxLength: =Parent.MaxLength
                                                 PaddingLeft: =5
-                                                PaddingRight: =2.53
-                                                PaddingTop: =2.53
                                                 PressedBorderColor: =RGBA(0, 120, 212, 1)
                                                 PressedColor: =RGBA(50, 49, 48, 1)
                                                 PressedFill: =RGBA(255, 255, 255, 1)
@@ -1002,10 +931,9 @@ Screens:
                                                 RadiusBottomRight: =0
                                                 RadiusTopLeft: =0
                                                 RadiusTopRight: =0
-                                                Size: =6.58
                                                 Tooltip: =Parent.DisplayName
-                                                Width: =201.33
-                                                X: =15.18
+                                                Width: =Parent.Width - 60
+                                                X: =30
                                                 Y: =DataCardKey4.Y + DataCardKey4.Height + 5
                                           - ErrorMessage3:
                                               Control: Label@2.5.1
@@ -1025,13 +953,12 @@ Screens:
                                                 Live: =Live.Assertive
                                                 PaddingBottom: =0
                                                 PaddingLeft: =0
-                                                PaddingRight: =0.00
-                                                PaddingTop: =0.00
-                                                Size: =6.58
+                                                PaddingRight: =0
+                                                PaddingTop: =0
                                                 Text: =Parent.Error
                                                 Visible: =Parent.DisplayMode=DisplayMode.Edit
-                                                Width: =201.33
-                                                X: =15.18
+                                                Width: =Parent.Width - 60
+                                                X: =30
                                                 Y: =DataCardValue4.Y + DataCardValue4.Height
                                           - StarVisible3:
                                               Control: Label@2.5.1
@@ -1049,14 +976,10 @@ Screens:
                                                 FontWeight: =FontWeight.Semibold
                                                 Height: =DataCardKey4.Height
                                                 PaddingLeft: =0
-                                                PaddingRight: =2.53
-                                                PaddingTop: =2.53
-                                                Size: =6.58
                                                 Text: ="*"
                                                 Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
-                                                Width: =15.18
+                                                Width: =30
                                                 Wrap: =false
-                                                X: =0.00
                                                 Y: =DataCardKey4.Y
                                     - AcquiredOn_DataCard1:
                                         Control: TypedDataCard@1.0.7
@@ -1069,7 +992,7 @@ Screens:
                                           DisplayName: =DataSourceInfo([@Equipment],DataSourceInfo.DisplayName,AcquiredOn)
                                           Required: =false
                                           Update: =DataCardValue5.SelectedDate
-                                          Width: =0
+                                          Width: =458
                                           X: =0
                                           Y: =2
                                         Children:
@@ -1089,13 +1012,10 @@ Screens:
                                                 FontWeight: =FontWeight.Semibold
                                                 Height: =34
                                                 PaddingLeft: =0
-                                                PaddingRight: =2.53
-                                                PaddingTop: =2.53
-                                                Size: =6.58
                                                 Text: =Parent.DisplayName
-                                                Width: =201.33
+                                                Width: =Parent.Width - 60
                                                 Wrap: =false
-                                                X: =15.18
+                                                X: =30
                                                 Y: =10
                                           - DataCardValue5:
                                               Control: Classic/DatePicker@2.6.0
@@ -1116,13 +1036,11 @@ Screens:
                                                 IsEditable: =true
                                                 PaddingBottom: =0
                                                 PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
-                                                PaddingRight: =2.53
-                                                PaddingTop: =0.00
-                                                Size: =6.58
+                                                Size: =13
                                                 StartYear: =1899
                                                 Tooltip: =Parent.DisplayName
-                                                Width: =201.33
-                                                X: =15.18
+                                                Width: =Parent.Width - 60
+                                                X: =30
                                                 Y: =DataCardKey5.Y + DataCardKey5.Height + 5
                                           - ErrorMessage4:
                                               Control: Label@2.5.1
@@ -1142,13 +1060,12 @@ Screens:
                                                 Live: =Live.Assertive
                                                 PaddingBottom: =0
                                                 PaddingLeft: =0
-                                                PaddingRight: =0.00
-                                                PaddingTop: =0.00
-                                                Size: =6.58
+                                                PaddingRight: =0
+                                                PaddingTop: =0
                                                 Text: =Parent.Error
                                                 Visible: =Parent.DisplayMode=DisplayMode.Edit
-                                                Width: =201.33
-                                                X: =15.18
+                                                Width: =Parent.Width - 60
+                                                X: =30
                                                 Y: =DataCardValue5.Y + DataCardValue5.Height
                                           - StarVisible4:
                                               Control: Label@2.5.1
@@ -1166,14 +1083,10 @@ Screens:
                                                 FontWeight: =FontWeight.Semibold
                                                 Height: =DataCardKey5.Height
                                                 PaddingLeft: =0
-                                                PaddingRight: =2.53
-                                                PaddingTop: =2.53
-                                                Size: =6.58
                                                 Text: ="*"
                                                 Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
-                                                Width: =15.18
+                                                Width: =30
                                                 Wrap: =false
-                                                X: =0.00
                                                 Y: =DataCardKey5.Y
                                     - Department_DataCard1:
                                         Control: TypedDataCard@1.0.7
@@ -1186,7 +1099,7 @@ Screens:
                                           DisplayName: =DataSourceInfo([@Equipment],DataSourceInfo.DisplayName,Department)
                                           Required: =false
                                           Update: =DataCardValue6.Selected.Value
-                                          Width: =0
+                                          Width: =458
                                           X: =1
                                           Y: =2
                                         Children:
@@ -1206,13 +1119,10 @@ Screens:
                                                 FontWeight: =FontWeight.Semibold
                                                 Height: =34
                                                 PaddingLeft: =0
-                                                PaddingRight: =2.53
-                                                PaddingTop: =2.53
-                                                Size: =6.58
                                                 Text: =Parent.DisplayName
-                                                Width: =201.33
+                                                Width: =Parent.Width - 60
                                                 Wrap: =false
-                                                X: =15.18
+                                                X: =30
                                                 Y: =10
                                           - DataCardValue6:
                                               Control: Classic/ComboBox@2.4.0
@@ -1239,18 +1149,15 @@ Screens:
                                                 IsSearchable: =false
                                                 Items: =Choices('Departments')
                                                 PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
-                                                PaddingRight: =2.53
-                                                PaddingTop: =2.53
                                                 PressedBorderColor: =RGBA(16, 110, 190, 1)
                                                 PressedColor: =RGBA(255, 255, 255, 1)
                                                 PressedFill: =RGBA(0, 120, 212, 1)
                                                 SelectMultiple: =false
                                                 SelectionColor: =RGBA(255, 255, 255, 1)
                                                 SelectionFill: =RGBA(0, 120, 212, 1)
-                                                Size: =6.58
                                                 Tooltip: =Parent.DisplayName
-                                                Width: =201.33
-                                                X: =15.18
+                                                Width: =Parent.Width - 60
+                                                X: =30
                                                 Y: =DataCardKey6.Y + DataCardKey6.Height + 5
                                           - ErrorMessage5:
                                               Control: Label@2.5.1
@@ -1270,13 +1177,12 @@ Screens:
                                                 Live: =Live.Assertive
                                                 PaddingBottom: =0
                                                 PaddingLeft: =0
-                                                PaddingRight: =0.00
-                                                PaddingTop: =0.00
-                                                Size: =6.58
+                                                PaddingRight: =0
+                                                PaddingTop: =0
                                                 Text: =Parent.Error
                                                 Visible: =Parent.DisplayMode=DisplayMode.Edit
-                                                Width: =201.33
-                                                X: =15.18
+                                                Width: =Parent.Width - 60
+                                                X: =30
                                                 Y: =DataCardValue6.Y + DataCardValue6.Height
                                           - StarVisible5:
                                               Control: Label@2.5.1
@@ -1294,14 +1200,10 @@ Screens:
                                                 FontWeight: =FontWeight.Semibold
                                                 Height: =DataCardKey6.Height
                                                 PaddingLeft: =0
-                                                PaddingRight: =2.53
-                                                PaddingTop: =2.53
-                                                Size: =6.58
                                                 Text: ="*"
                                                 Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
-                                                Width: =15.18
+                                                Width: =30
                                                 Wrap: =false
-                                                X: =0.00
                                                 Y: =DataCardKey6.Y
                                     - CurrentStatus_DataCard1:
                                         Control: TypedDataCard@1.0.7
@@ -1314,7 +1216,7 @@ Screens:
                                           DisplayName: =DataSourceInfo([@Equipment],DataSourceInfo.DisplayName,CurrentStatus)
                                           Required: =false
                                           Update: =DataCardValue7.Selected.Value
-                                          Width: =0
+                                          Width: =458
                                           X: =0
                                           Y: =3
                                         Children:
@@ -1334,13 +1236,10 @@ Screens:
                                                 FontWeight: =FontWeight.Semibold
                                                 Height: =34
                                                 PaddingLeft: =0
-                                                PaddingRight: =2.53
-                                                PaddingTop: =2.53
-                                                Size: =6.58
                                                 Text: =Parent.DisplayName
-                                                Width: =201.33
+                                                Width: =Parent.Width - 60
                                                 Wrap: =false
-                                                X: =15.18
+                                                X: =30
                                                 Y: =10
                                           - DataCardValue7:
                                               Control: Classic/ComboBox@2.4.0
@@ -1367,18 +1266,15 @@ Screens:
                                                 IsSearchable: =false
                                                 Items: =Choices('EquipmentStatus')
                                                 PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
-                                                PaddingRight: =2.53
-                                                PaddingTop: =2.53
                                                 PressedBorderColor: =RGBA(16, 110, 190, 1)
                                                 PressedColor: =RGBA(255, 255, 255, 1)
                                                 PressedFill: =RGBA(0, 120, 212, 1)
                                                 SelectMultiple: =false
                                                 SelectionColor: =RGBA(255, 255, 255, 1)
                                                 SelectionFill: =RGBA(0, 120, 212, 1)
-                                                Size: =6.58
                                                 Tooltip: =Parent.DisplayName
-                                                Width: =201.33
-                                                X: =15.18
+                                                Width: =Parent.Width - 60
+                                                X: =30
                                                 Y: =DataCardKey7.Y + DataCardKey7.Height + 5
                                           - ErrorMessage6:
                                               Control: Label@2.5.1
@@ -1398,13 +1294,12 @@ Screens:
                                                 Live: =Live.Assertive
                                                 PaddingBottom: =0
                                                 PaddingLeft: =0
-                                                PaddingRight: =0.00
-                                                PaddingTop: =0.00
-                                                Size: =6.58
+                                                PaddingRight: =0
+                                                PaddingTop: =0
                                                 Text: =Parent.Error
                                                 Visible: =Parent.DisplayMode=DisplayMode.Edit
-                                                Width: =201.33
-                                                X: =15.18
+                                                Width: =Parent.Width - 60
+                                                X: =30
                                                 Y: =DataCardValue7.Y + DataCardValue7.Height
                                           - StarVisible6:
                                               Control: Label@2.5.1
@@ -1422,14 +1317,10 @@ Screens:
                                                 FontWeight: =FontWeight.Semibold
                                                 Height: =DataCardKey7.Height
                                                 PaddingLeft: =0
-                                                PaddingRight: =2.53
-                                                PaddingTop: =2.53
-                                                Size: =6.58
                                                 Text: ="*"
                                                 Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
-                                                Width: =15.18
+                                                Width: =30
                                                 Wrap: =false
-                                                X: =0.00
                                                 Y: =DataCardKey7.Y
                                     - EquipmentPhoto_DataCard1:
                                         Control: TypedDataCard@1.0.7
@@ -1442,7 +1333,7 @@ Screens:
                                           DisplayName: =DataSourceInfo([@Equipment],DataSourceInfo.DisplayName,'tkr_equipmentphoto')
                                           Required: =false
                                           Update: =Image4.Image
-                                          Width: =0
+                                          Width: =458
                                           X: =1
                                           Y: =3
                                         Children:
@@ -1462,13 +1353,10 @@ Screens:
                                                 FontWeight: =FontWeight.Semibold
                                                 Height: =34
                                                 PaddingLeft: =0
-                                                PaddingRight: =2.53
-                                                PaddingTop: =2.53
-                                                Size: =6.58
                                                 Text: =Parent.DisplayName
-                                                Width: =201.33
+                                                Width: =Parent.Width - 60
                                                 Wrap: =false
-                                                X: =15.18
+                                                X: =30
                                                 Y: =10
                                           - Image4:
                                               Control: Image@2.2.3
@@ -1485,13 +1373,11 @@ Screens:
                                                 HoverBorderColor: =RGBA(0, 0, 0, 0)
                                                 HoverFill: =RGBA(0, 0, 0, 0)
                                                 Image: =If(IsBlank(AddPicture2.Media), Parent.Default, AddPicture2.Media)
-                                                PaddingRight: =0.00
-                                                PaddingTop: =0.00
                                                 PressedBorderColor: =RGBA(0, 0, 0, 0)
                                                 PressedFill: =RGBA(0, 0, 0, 0)
                                                 Tooltip: =Parent.DisplayName
-                                                Width: =201.33
-                                                X: =15.18
+                                                Width: =AddPicture2.Width
+                                                X: =AddPicture2.X
                                                 Y: =AddPicture2.Y
                                           - AddPicture2:
                                               Control: AddMedia@2.2.1
@@ -1514,9 +1400,9 @@ Screens:
                                                 PressedBorderColor: =RGBA(0, 69, 120, 1)
                                                 PressedColor: =RGBA(255, 255, 255, 1)
                                                 PressedFill: =RGBA(16, 110, 190, 1)
-                                                Size: =7.58
-                                                Width: =201.33
-                                                X: =15.18
+                                                Size: =15
+                                                Width: =Parent.Width - 60
+                                                X: =30
                                                 Y: =DataCardKey8.Y + DataCardKey8.Height + 5
                                           - ErrorMessage13:
                                               Control: Label@2.5.1
@@ -1536,13 +1422,12 @@ Screens:
                                                 Live: =Live.Assertive
                                                 PaddingBottom: =0
                                                 PaddingLeft: =0
-                                                PaddingRight: =0.00
-                                                PaddingTop: =0.00
-                                                Size: =6.58
+                                                PaddingRight: =0
+                                                PaddingTop: =0
                                                 Text: =Parent.Error
                                                 Visible: =Parent.DisplayMode=DisplayMode.Edit
-                                                Width: =201.33
-                                                X: =15.18
+                                                Width: =Parent.Width - 60
+                                                X: =30
                                                 Y: =Image4.Y + Image4.Height
                                           - StarVisible13:
                                               Control: Label@2.5.1
@@ -1560,14 +1445,10 @@ Screens:
                                                 FontWeight: =FontWeight.Semibold
                                                 Height: =DataCardKey8.Height
                                                 PaddingLeft: =0
-                                                PaddingRight: =2.53
-                                                PaddingTop: =2.53
-                                                Size: =6.58
                                                 Text: ="*"
                                                 Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
-                                                Width: =15.18
+                                                Width: =30
                                                 Wrap: =false
-                                                X: =0.00
                                                 Y: =DataCardKey8.Y
                                     - QRCodeImage_DataCard1:
                                         Control: TypedDataCard@1.0.7
@@ -1580,7 +1461,7 @@ Screens:
                                           DisplayName: =DataSourceInfo([@Equipment],DataSourceInfo.DisplayName,QRCodeImage)
                                           Required: =false
                                           Update: =Image2.Image
-                                          Width: =0
+                                          Width: =458
                                           X: =0
                                           Y: =4
                                         Children:
@@ -1600,13 +1481,10 @@ Screens:
                                                 FontWeight: =FontWeight.Semibold
                                                 Height: =34
                                                 PaddingLeft: =0
-                                                PaddingRight: =2.53
-                                                PaddingTop: =2.53
-                                                Size: =6.58
                                                 Text: =Parent.DisplayName
-                                                Width: =201.33
+                                                Width: =Parent.Width - 60
                                                 Wrap: =false
-                                                X: =15.18
+                                                X: =30
                                                 Y: =10
                                           - Image2:
                                               Control: Image@2.2.3
@@ -1623,13 +1501,11 @@ Screens:
                                                 HoverBorderColor: =RGBA(0, 0, 0, 0)
                                                 HoverFill: =RGBA(0, 0, 0, 0)
                                                 Image: =If(IsBlank(AddPicture1.Media), Parent.Default, AddPicture1.Media)
-                                                PaddingRight: =0.00
-                                                PaddingTop: =0.00
                                                 PressedBorderColor: =RGBA(0, 0, 0, 0)
                                                 PressedFill: =RGBA(0, 0, 0, 0)
                                                 Tooltip: =Parent.DisplayName
-                                                Width: =201.33
-                                                X: =15.18
+                                                Width: =AddPicture1.Width
+                                                X: =AddPicture1.X
                                                 Y: =AddPicture1.Y
                                           - AddPicture1:
                                               Control: AddMedia@2.2.1
@@ -1652,9 +1528,9 @@ Screens:
                                                 PressedBorderColor: =RGBA(0, 69, 120, 1)
                                                 PressedColor: =RGBA(255, 255, 255, 1)
                                                 PressedFill: =RGBA(16, 110, 190, 1)
-                                                Size: =7.58
-                                                Width: =201.33
-                                                X: =15.18
+                                                Size: =15
+                                                Width: =Parent.Width - 60
+                                                X: =30
                                                 Y: =DataCardKey9.Y + DataCardKey9.Height + 5
                                           - ErrorMessage7:
                                               Control: Label@2.5.1
@@ -1674,13 +1550,12 @@ Screens:
                                                 Live: =Live.Assertive
                                                 PaddingBottom: =0
                                                 PaddingLeft: =0
-                                                PaddingRight: =0.00
-                                                PaddingTop: =0.00
-                                                Size: =6.58
+                                                PaddingRight: =0
+                                                PaddingTop: =0
                                                 Text: =Parent.Error
                                                 Visible: =Parent.DisplayMode=DisplayMode.Edit
-                                                Width: =201.33
-                                                X: =15.18
+                                                Width: =Parent.Width - 60
+                                                X: =30
                                                 Y: =Image2.Y + Image2.Height
                                           - StarVisible7:
                                               Control: Label@2.5.1
@@ -1698,14 +1573,10 @@ Screens:
                                                 FontWeight: =FontWeight.Semibold
                                                 Height: =DataCardKey9.Height
                                                 PaddingLeft: =0
-                                                PaddingRight: =2.53
-                                                PaddingTop: =2.53
-                                                Size: =6.58
                                                 Text: ="*"
                                                 Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
-                                                Width: =15.18
+                                                Width: =30
                                                 Wrap: =false
-                                                X: =0.00
                                                 Y: =DataCardKey9.Y
                   - DeleteConfirmDialogContainer1:
                       Control: GroupContainer@1.3.0
@@ -1713,11 +1584,8 @@ Screens:
                       Properties:
                         FillPortions: =7
                         LayoutDirection: =LayoutDirection.Vertical
-                        PaddingRight: =0.00
-                        PaddingTop: =0.00
                         Visible: =If(deleteMode, true, false)
-                        Width: =0.00
-                        X: =0.00
+                        Width: =0
                       Children:
                         - ConfirmDeletionLabel1:
                             Control: Label@2.5.1
@@ -1733,12 +1601,7 @@ Screens:
                               FillPortions: =1
                               FocusedBorderThickness: =4
                               Font: =Font.'Segoe UI'
-                              PaddingRight: =2.53
-                              PaddingTop: =2.53
-                              Size: =6.58
                               Text: ="このレコードを削除しますか?"
-                              Width: =0.00
-                              X: =0.00
                         - ConfirmDeleteButtonBarContainer1:
                             Control: GroupContainer@1.3.0
                             Variant: AutoLayout
@@ -1748,14 +1611,10 @@ Screens:
                               LayoutGap: =15
                               LayoutJustifyContent: =LayoutJustifyContent.Center
                               LayoutWrap: =true
-                              PaddingRight: =0.00
-                              PaddingTop: =0.00
                               RadiusBottomLeft: =0
                               RadiusBottomRight: =0
                               RadiusTopLeft: =0
                               RadiusTopRight: =0
-                              Width: =0.00
-                              X: =0.00
                             Children:
                               - CancelDeleteButton1:
                                   Control: Classic/Button@2.2.0
@@ -1773,8 +1632,6 @@ Screens:
                                     HoverFill: =RGBA(16, 110, 190, 1)
                                     OnSelect: |-
                                       =UpdateContext({ deleteMode: false, deleteCancelled: true })
-                                    PaddingRight: =2.53
-                                    PaddingTop: =2.53
                                     PressedBorderColor: =RGBA(0, 69, 120, 1)
                                     PressedColor: =RGBA(255, 255, 255, 1)
                                     PressedFill: =RGBA(16, 110, 190, 1)
@@ -1782,10 +1639,7 @@ Screens:
                                     RadiusBottomRight: =0
                                     RadiusTopLeft: =0
                                     RadiusTopRight: =0
-                                    Size: =7.58
                                     Text: ="キャンセル"
-                                    Width: =80.94
-                                    X: =0.00
                               - ConfirmDeleteButton1:
                                   Control: Classic/Button@2.2.0
                                   Properties:
@@ -1802,8 +1656,6 @@ Screens:
                                     HoverFill: =RGBA(16, 110, 190, 1)
                                     OnSelect: |-
                                       =Remove([@Equipment], selectedRecord); If(IsEmpty(Errors([@Equipment], selectedRecord)), UpdateContext( { CurrentItem: First([@Equipment]), itemSelected: false, editMode: false, newMode: false, deleteMode: false }));
-                                    PaddingRight: =2.53
-                                    PaddingTop: =2.53
                                     PressedBorderColor: =RGBA(0, 69, 120, 1)
                                     PressedColor: =RGBA(255, 255, 255, 1)
                                     PressedFill: =RGBA(16, 110, 190, 1)
@@ -1811,30 +1663,4 @@ Screens:
                                     RadiusBottomRight: =0
                                     RadiusTopLeft: =0
                                     RadiusTopRight: =0
-                                    Size: =7.58
                                     Text: ="削除"
-                                    Width: =80.94
-                                    X: =0.00
-      - Icon1:
-          Control: Classic/Icon@2.5.0
-          Properties:
-            BorderColor: =RGBA(0, 0, 0, 0)
-            Color: =RGBA(255, 255, 255, 1)
-            DisabledBorderColor: =RGBA(245, 245, 245, 1)
-            DisabledColor: =RGBA(225, 223, 221, 1)
-            DisabledFill: =RGBA(0, 0, 0, 0)
-            FocusedBorderThickness: =4
-            Height: =27
-            HoverBorderColor: =RGBA(0, 0, 0, 0)
-            HoverColor: =RGBA(16, 110, 190, 1)
-            HoverFill: =RGBA(0, 0, 0, 0)
-            Icon: =Icon.BackArrow
-            OnSelect: =Back()
-            PaddingRight: =0.00
-            PaddingTop: =0.00
-            PressedBorderColor: =RGBA(0, 0, 0, 0)
-            PressedColor: =RGBA(16, 110, 190, 1)
-            PressedFill: =RGBA(0, 0, 0, 0)
-            Width: =26.09
-            X: =620.80
-            Y: =30
