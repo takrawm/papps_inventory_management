@@ -1,1 +1,6 @@
 app.msapp
+
+# Power Apps EditorState files - these contain editing history and UI state
+# They are regenerated automatically and grow large over time
+src/Src/EditorState/
+src/Other/Src/_EditorState.pa.yaml
