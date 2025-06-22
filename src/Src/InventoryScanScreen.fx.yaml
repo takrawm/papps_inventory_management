@@ -1,0 +1,157 @@
+"InventoryScanScreen As screen.'welcomeLayout_AFD_ver1.0'":
+    LoadingSpinnerColor: =RGBA(0, 120, 212, 1)
+
+    ScreenContainer3_1 As groupContainer.verticalAutoLayoutContainer:
+        DropShadow: =DropShadow.Light
+        Fill: =RGBA(245, 245, 245, 1)
+        Height: =Parent.Height
+        LayoutDirection: =LayoutDirection.Vertical
+        LayoutGap: =16
+        LayoutMode: =LayoutMode.Auto
+        PaddingBottom: =16
+        PaddingLeft: =16
+        PaddingRight: =16
+        PaddingTop: =16
+        RadiusBottomLeft: =4
+        RadiusBottomRight: =4
+        RadiusTopLeft: =4
+        RadiusTopRight: =4
+        Width: =Parent.Width
+        ZIndex: =1
+
+        HeaderContainer1_1 As groupContainer.horizontalAutoLayoutContainer:
+            DropShadow: =DropShadow.Light
+            Fill: =RGBA(255, 255, 255, 1)
+            FillPortions: =0
+            Height: =75
+            LayoutMinHeight: =100
+            LayoutMinWidth: =250
+            LayoutMode: =LayoutMode.Auto
+            RadiusBottomLeft: =8
+            RadiusBottomRight: =8
+            RadiusTopLeft: =8
+            RadiusTopRight: =8
+            ZIndex: =1
+
+            Header1_1 As ヘッダー​​:
+                DisplayMode: =DisplayMode.Edit
+                Height: =75
+                LayoutMinHeight: =75
+                LayoutMinWidth: =Parent.Width
+                OnSelectLogo: =false
+                Title: ="QRコードスキャン画面"
+                UserEmail: =User().Email
+                UserImage: =User().Image
+                UserImageAltText: =User().FullName &" profile picture"
+                UserName: =User().FullName
+                Width: =Parent.Width
+                X: =0
+                Y: =0
+                ZIndex: =2
+
+        Container1_2 As groupContainer.verticalAutoLayoutContainer:
+            DropShadow: =DropShadow.Light
+            Fill: =RGBA(255, 255, 255, 1)
+            LayoutAlignItems: =LayoutAlignItems.Center
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGap: =5
+            LayoutJustifyContent: =LayoutJustifyContent.Center
+            LayoutMinHeight: =300
+            LayoutMinWidth: =If(InventoryScanScreen.Size = ScreenSize.Small, Parent.Width, 400)
+            LayoutMode: =LayoutMode.Auto
+            LayoutOverflowY: =LayoutOverflow.Scroll
+            PaddingBottom: =10
+            PaddingLeft: =5
+            PaddingRight: =5
+            PaddingTop: =10
+            RadiusBottomLeft: =4
+            RadiusBottomRight: =4
+            RadiusTopLeft: =4
+            RadiusTopRight: =4
+            ZIndex: =5
+
+            "BarcodeScanner1 As 'バーコード リーダー'":
+                BorderFillColor: =RGBA(47, 81, 151, 1)
+                DisabledBorderColor: =RGBA(166, 166, 166, 1)
+                DisabledContentColor: =RGBA(166, 166, 166, 1)
+                DisabledFillColor: =RGBA(244, 244, 244, 1)
+                DisplayMode: =DisplayMode.Edit
+                FillColor: =RGBA(56, 96, 178, 1)
+                Height: =200
+                HoverBorderColor: =RGBA(88, 115, 171, 1)
+                HoverContentColor: =RGBA(255, 255, 255, 1)
+                HoverFillColor: =RGBA(47, 81, 151, 1)
+                LayoutMinHeight: =70
+                LayoutMinWidth: =280
+                OnCancel: =false
+                OnScan: |-
+                    =// OnScanイベントのコード
+                    // まず、バーコードが読み取れたかチェック
+                    If(
+                        CountRows(Self.Barcodes) > 0,
+                        
+                        // バーコードが読み取れた場合
+                        // 最初のバーコードの値を変数に保存
+                        Set(gblScannedValue, First(Self.Barcodes).Value);
+                        
+                        // デバッグ用：スキャンした値を確認
+                        Notify("スキャンしたコード: " & gblScannedValue, NotificationType.Information);
+                        
+                        // 該当する備品を検索
+                        Set(
+                            gblScannedEquipment,
+                            LookUp(
+                                Equipment,
+                                EquipmentCode = gblScannedValue
+                            )
+                        );
+                        
+                        // 備品が見つかったかどうかで処理を分岐
+                        If(
+                            !IsBlank(gblScannedEquipment),
+                            // 備品が見つかった場合
+                            Navigate(
+                                'InventoryHistoryScreen',
+                                ScreenTransition.None,
+                                {
+                                    NewInventoryMode: true,
+                                    SelectedEquipment: gblScannedEquipment
+                                }
+                            ),
+                            // 備品が見つからなかった場合
+                            Notify(
+                                "備品が見つかりません: " & gblScannedValue,
+                                NotificationType.Error
+                            )
+                        ),
+                        
+                        // バーコードが読み取れなかった場合
+                        Notify(
+                            "バーコードを読み取れませんでした。もう一度お試しください。",
+                            NotificationType.Warning
+                        )
+                    )
+                PressedBorderColor: =RGBA(56, 96, 178, 1)
+                PressedContentColor: =RGBA(56, 96, 178, 1)
+                PressedFillColor: =RGBA(255, 255, 255, 1)
+                Text: ="スキャンを実行"
+                TextColor: =RGBA(255, 255, 255, 1)
+                Width: =400
+                X: =0
+                Y: =0
+                ZIndex: =1
+
+            Label1 As label:
+                BorderColor: =RGBA(0, 0, 0, 0)
+                BorderStyle: =BorderStyle.None
+                BorderThickness: =2
+                Color: =RGBA(50, 49, 48, 1)
+                DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                DisabledColor: =RGBA(161, 159, 157, 1)
+                Fill: =RGBA(187, 221, 140, 1)
+                FocusedBorderThickness: =4
+                Font: =Font.'Segoe UI'
+                Size: =13
+                Text: =gblScannedValue
+                ZIndex: =2
+

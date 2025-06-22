@@ -1,0 +1,3 @@
+{
+  "AppFromDataMetaDataIdsToEntityNameMappings": "{\"%DataSourceName.AFD%\":\"InventoryHistory\",\"%DataSourceValue.AFD%\":\"[@InventoryHistory]\",\"%SortFieldName.AFD%\":\"\\\"tkr_inventorysummary\\\"\",\"%FilterFieldName.AFD%\":\"tkr_inventorysummary\",\"%PrimaryNameField.AFD%\":\"tkr_inventorysummary\",\"%PrimaryNameFieldDisplayName.AFD%\":\"'InventorySummary'\",\"%SearchFieldName.AFD%\":\"tkr_inventorysummary\",\"%StartsWithFieldName.AFD%\":\"tkr_inventorysummary\",\"%DeleteConfirmFieldName.AFD%\":\"tkr_inventorysummary\",\"%SortDescending.AFD%\":\"SortDescending2\",\"%CopilotSinglePageScreen.ID%\":\"'InventoryHistory 画面'\",\"%BrowseContainer.ID%\":\"BrowseGallery2\",\"%DetailEditContainer.ID%\":\"EditForm2\"}"
+}

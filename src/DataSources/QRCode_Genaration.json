@@ -1,0 +1,10 @@
+[
+  {
+    "ApiId": "/providers/microsoft.powerapps/apis/shared_logicflows",
+    "FlowNameId": "9d3db08b-3390-4d8c-aaa9-75bc8ef72cd8",
+    "Name": "QRCode_Genaration",
+    "ServiceKind": "ConnectedWadl",
+    "Type": "ServiceInfo",
+    "WorkflowEntityId": "1bad95c5-f14e-f011-877b-6045bd537bf7"
+  }
+]

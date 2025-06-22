@@ -1,0 +1,18 @@
+{
+  "QualifiedValues": [
+    {
+      "Kind": "default.cds_tkr_equipment_forms",
+      "Namespace": "Equipment (フォーム)",
+      "Values": {
+        "情報": "e368ca81-2886-4867-b211-5daa623ab45f"
+      }
+    },
+    {
+      "Kind": "default.cds_tkr_inventoryhistory_forms",
+      "Namespace": "InventoryHistory (フォーム)",
+      "Values": {
+        "情報": "23a80b96-906a-42ea-b627-d8ea7f83686c"
+      }
+    }
+  ]
+}

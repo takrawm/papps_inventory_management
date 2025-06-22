@@ -1,0 +1,101 @@
+[
+  {
+    "CdsFCBContext": "{\"FileType\":true,\"ImageExternalStorage\":true}",
+    "EntitySetName": "tkr_inventoryhistories",
+    "IsHidden": false,
+    "IsSampleData": false,
+    "IsWritable": true,
+    "LogicalName": "tkr_inventoryhistory",
+    "MaxGetRowsCount": 500,
+    "Name": "InventoryHistory",
+    "NativeCDSDataSourceInfoNameMapping": {
+      "_ownerid_value": "所有者",
+      "createdby": "作成者",
+      "createdon": "作成日",
+      "createdonbehalfby": "作成者 (代理)",
+      "importsequencenumber": "インポート シーケンス番号",
+      "modifiedby": "修正者",
+      "modifiedon": "修正日",
+      "modifiedonbehalfby": "修正者 (代理)",
+      "overriddencreatedon": "レコード作成日",
+      "owningbusinessunit": "所属部署",
+      "owningteam": "所有チーム",
+      "owninguser": "所有ユーザー",
+      "statecode": "状態",
+      "statuscode": "ステータス",
+      "timezoneruleversionnumber": "タイム ゾーン規則のバージョン番号",
+      "tkr_department": "Department",
+      "tkr_equipmentstatus": "EquipmentStatus",
+      "tkr_EquiptmentId": "EquiptmentId",
+      "tkr_inventorydate": "InventoryDate",
+      "tkr_inventoryhistory_AsyncOperations": "システム ジョブ ",
+      "tkr_inventoryhistory_BulkDeleteFailures": "一括削除の失敗 ",
+      "tkr_inventoryhistory_DuplicateBaseRecord": "レコードの重複  (tkr_inventoryhistory_DuplicateBaseRecord)",
+      "tkr_inventoryhistory_DuplicateMatchingRecord": "レコードの重複  (tkr_inventoryhistory_DuplicateMatchingRecord)",
+      "tkr_inventoryhistory_MailboxTrackingFolders": "メールボックス自動追跡フォルダー",
+      "tkr_inventoryhistory_PrincipalObjectAttributeAccesses": "フィールド共有 ",
+      "tkr_inventoryhistory_ProcessSession": "プロセス セッション",
+      "tkr_inventoryhistory_SyncErrors": "同期エラー",
+      "tkr_inventoryhistoryid": "InventoryHistoryId",
+      "tkr_inventorysummary": "InventorySummary",
+      "utcconversiontimezonecode": "UTC 変換タイム ゾーン コード",
+      "versionnumber": "バージョン番号"
+    },
+    "PreferredName": "InventoryHistory",
+    "Type": "NativeCDSDataSourceInfo"
+  },
+  {
+    "DisplayName": "InventoryHistory (ビュー)",
+    "Name": "_tkr_inventoryhistory_views",
+    "RelatedEntityName": "InventoryHistory",
+    "TrimmedViewName": true,
+    "Type": "ViewInfo",
+    "ViewInfoNameMapping": {
+      "29b3e550-acac-406c-9d68-854fd5c4ca9d": "InventoryHistory関連ビュー",
+      "40001e3b-7915-4fce-9ad1-34deefb73735": "InventoryHistory検索ダイアログ ビュー",
+      "6b1716d7-a75f-4de0-a976-1ec5d6c3dcd2": "アクティブなInventoryHistory",
+      "75c5ede3-1ee6-4341-bb12-629de2c7ef9a": "非アクティブなInventoryHistory",
+      "a2beb798-87c5-42f4-a342-c699494b6269": "InventoryHistoryの高度な検索ビュー"
+    }
+  },
+  {
+    "DisplayName": "状態 (InventoryHistory)",
+    "Name": "tkr_inventoryhistory_statecode",
+    "OptionSetInfoNameMapping": {
+      "0": "アクティブ",
+      "1": "非アクティブ"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": false,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "statecode",
+        "OptionSetReferenceEntityName": "InventoryHistory"
+      }
+    },
+    "OptionSetTypeKey": "StateType",
+    "RelatedColumnInvariantName": "statecode",
+    "RelatedEntityName": "InventoryHistory",
+    "Type": "OptionSetInfo"
+  },
+  {
+    "DisplayName": "ステータス (InventoryHistory)",
+    "Name": "tkr_inventoryhistory_statuscode",
+    "OptionSetInfoNameMapping": {
+      "1": "アクティブ",
+      "2": "非アクティブ"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": false,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "statuscode",
+        "OptionSetReferenceEntityName": "InventoryHistory"
+      }
+    },
+    "OptionSetTypeKey": "StatusType",
+    "RelatedColumnInvariantName": "statuscode",
+    "RelatedEntityName": "InventoryHistory",
+    "Type": "OptionSetInfo"
+  }
+]

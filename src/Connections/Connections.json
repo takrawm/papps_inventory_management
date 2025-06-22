@@ -1,0 +1,77 @@
+{
+  "82d25b73-da98-4b0b-acb3-fcf38a8ed76f": {
+    "appActions": [],
+    "connectionRef": {
+      "apiTier": "Premium",
+      "authenticationType": "Oauth",
+      "bypassConsent": true,
+      "displayName": "Microsoft Dataverse",
+      "executionRestrictions": {
+        "apiId": "unknown",
+        "appVer": "3.25062.8",
+        "modifiedOn": "2025-06-22 04:45:53",
+        "policy": "{\"type\":\"unused\"}",
+        "version": 1
+      },
+      "iconUri": "https://conn-afd-prod-endpoint-bmc9bqahasf3grgk.b01.azurefd.net/v1.0.1757/1.0.1757.4253/commondataserviceforapps/icon.png",
+      "id": "/providers/microsoft.powerapps/apis/shared_commondataserviceforapps",
+      "parameterHints": {},
+      "parameterHintsV2": {},
+      "sharedConnectionId": "/providers/microsoft.powerapps/apis/shared_commondataserviceforapps/connections/shared-commondataser-7f3df033-5652-4622-9936-b26e6f2fac22",
+      "xrmConnectionReferenceLogicalName": "new_sharedcommondataserviceforapps_ea7e9"
+    },
+    "datasets": {},
+    "dataSources": [],
+    "dependencies": {},
+    "dependents": [
+      "fc6c727c-66d1-4e0f-8305-17d18d07bf3e"
+    ],
+    "id": "82d25b73-da98-4b0b-acb3-fcf38a8ed76f"
+  },
+  "fc6c727c-66d1-4e0f-8305-17d18d07bf3e": {
+    "appActions": [],
+    "connectionRef": {
+      "apiTier": "Standard",
+      "displayName": "ロジック フロー",
+      "iconUri": "https://conn-afd-prod-endpoint-bmc9bqahasf3grgk.b01.azurefd.net/v1.0.1752/1.0.1752.4216/logicflows/icon.png",
+      "id": "/providers/microsoft.powerapps/apis/shared_logicflows",
+      "parameterHints": {
+        "82d25b73-da98-4b0b-acb3-fcf38a8ed76f": {
+          "value": "shared_commondataserviceforapps"
+        },
+        "workflowDisplayName": {
+          "value": "QRCode_Genaration"
+        },
+        "workflowEntityId": {
+          "value": "1bad95c5-f14e-f011-877b-6045bd537bf7"
+        },
+        "workflowName": {
+          "value": "b47b24ee-1d79-1ba5-bfbe-76fdd24ca9de"
+        }
+      },
+      "parameterHintsV2": {
+        "shared_commondataserviceforapps": {
+          "value": "82d25b73-da98-4b0b-acb3-fcf38a8ed76f"
+        },
+        "workflowDisplayName": {
+          "value": "QRCode_Genaration"
+        },
+        "workflowEntityId": {
+          "value": "1bad95c5-f14e-f011-877b-6045bd537bf7"
+        },
+        "workflowName": {
+          "value": "b47b24ee-1d79-1ba5-bfbe-76fdd24ca9de"
+        }
+      }
+    },
+    "datasets": {},
+    "dataSources": [
+      "QRCode_Genaration"
+    ],
+    "dependencies": {
+      "shared_commondataserviceforapps": "82d25b73-da98-4b0b-acb3-fcf38a8ed76f"
+    },
+    "dependents": [],
+    "id": "fc6c727c-66d1-4e0f-8305-17d18d07bf3e"
+  }
+}

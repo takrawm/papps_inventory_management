@@ -1,0 +1,82 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps should only be used to review changes made within Power Apps Studio and for minor edits (Preview).
+# Use the maker portal to create and edit your Power Apps.
+# 
+# The schema file for Canvas Apps is available at https://go.microsoft.com/fwlink/?linkid=2304907
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+Screens:
+  InventoryScanScreen:
+    Properties:
+      Fill: =RGBA(255, 255, 255, 1)
+      LoadingSpinnerColor: =RGBA(0, 120, 212, 1)
+    Children:
+      - ScreenContainer3_1:
+          Control: GroupContainer@1.3.0
+          Variant: AutoLayout
+          Properties:
+            Fill: =RGBA(245, 245, 245, 1)
+            Height: =Parent.Height
+            LayoutDirection: =LayoutDirection.Vertical
+            LayoutGap: =16
+            PaddingBottom: =16
+            PaddingLeft: =16
+            PaddingRight: =16
+            PaddingTop: =16
+            Width: =Parent.Width
+          Children:
+            - HeaderContainer1_1:
+                Control: GroupContainer@1.3.0
+                Variant: AutoLayout
+                Properties:
+                  Fill: =RGBA(255, 255, 255, 1)
+                  FillPortions: =0
+                  Height: =75
+                  LayoutDirection: =LayoutDirection.Horizontal
+                  RadiusBottomLeft: =8
+                  RadiusBottomRight: =8
+                  RadiusTopLeft: =8
+                  RadiusTopRight: =8
+                Children:
+                  - Header1_1:
+                      Control: Header@0.0.44
+                      Properties:
+                        Title: ="QRコードスキャン画面"
+            - Container1_2:
+                Control: GroupContainer@1.3.0
+                Variant: AutoLayout
+                Properties:
+                  Fill: =RGBA(255, 255, 255, 1)
+                  LayoutAlignItems: =LayoutAlignItems.Center
+                  LayoutDirection: =LayoutDirection.Vertical
+                  LayoutGap: =5
+                  LayoutJustifyContent: =LayoutJustifyContent.Center
+                  LayoutMinHeight: =300
+                  LayoutMinWidth: =If(InventoryScanScreen.Size = ScreenSize.Small, Parent.Width, 400)
+                  LayoutOverflowY: =LayoutOverflow.Scroll
+                  PaddingBottom: =10
+                  PaddingLeft: =5
+                  PaddingRight: =5
+                  PaddingTop: =10
+                Children:
+                  - BarcodeScanner1:
+                      Control: BarcodeReader@1.0.24
+                      Properties:
+                        Height: =200
+                        OnScan: "=// OnScanイベントのコード\r\n// まず、バーコードが読み取れたかチェック\r\nIf(\r\n    CountRows(Self.Barcodes) > 0,\r\n    \r\n    // バーコードが読み取れた場合\r\n    // 最初のバーコードの値を変数に保存\r\n    Set(gblScannedValue, First(Self.Barcodes).Value);\r\n    \r\n    // デバッグ用：スキャンした値を確認\r\n    Notify(\"スキャンしたコード: \" & gblScannedValue, NotificationType.Information);\r\n    \r\n    // 該当する備品を検索\r\n    Set(\r\n        gblScannedEquipment,\r\n        LookUp(\r\n            Equipment,\r\n            EquipmentCode = gblScannedValue\r\n        )\r\n    );\r\n    \r\n    // 備品が見つかったかどうかで処理を分岐\r\n    If(\r\n        !IsBlank(gblScannedEquipment),\r\n        // 備品が見つかった場合\r\n        Navigate(\r\n            'InventoryHistoryScreen',\r\n            ScreenTransition.None,\r\n            {\r\n                NewInventoryMode: true,\r\n                SelectedEquipment: gblScannedEquipment\r\n            }\r\n        ),\r\n        // 備品が見つからなかった場合\r\n        Notify(\r\n            \"備品が見つかりません: \" & gblScannedValue,\r\n            NotificationType.Error\r\n        )\r\n    ),\r\n    \r\n    // バーコードが読み取れなかった場合\r\n    Notify(\r\n        \"バーコードを読み取れませんでした。もう一度お試しください。\",\r\n        NotificationType.Warning\r\n    )\r\n)"
+                        Text: ="スキャンを実行"
+                        Width: =400
+                  - Label1:
+                      Control: Label@2.5.1
+                      Properties:
+                        BorderColor: =RGBA(0, 0, 0, 0)
+                        BorderStyle: =BorderStyle.None
+                        BorderThickness: =2
+                        Color: =RGBA(50, 49, 48, 1)
+                        DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                        DisabledColor: =RGBA(161, 159, 157, 1)
+                        Fill: =RGBA(187, 221, 140, 1)
+                        FocusedBorderThickness: =4
+                        Font: =Font.'Segoe UI'
+                        Text: =gblScannedValue

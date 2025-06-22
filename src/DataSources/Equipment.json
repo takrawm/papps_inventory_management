@@ -1,0 +1,189 @@
+[
+  {
+    "CdsFCBContext": "{\"FileType\":true,\"ImageExternalStorage\":true}",
+    "EntitySetName": "tkr_equipments",
+    "IsHidden": false,
+    "IsSampleData": false,
+    "IsWritable": true,
+    "LogicalName": "tkr_equipment",
+    "MaxGetRowsCount": 500,
+    "Name": "Equipment",
+    "NativeCDSDataSourceInfoNameMapping": {
+      "_ownerid_value": "所有者",
+      "createdby": "作成者",
+      "createdon": "作成日",
+      "createdonbehalfby": "作成者 (代理)",
+      "importsequencenumber": "インポート シーケンス番号",
+      "modifiedby": "修正者",
+      "modifiedon": "修正日",
+      "modifiedonbehalfby": "修正者 (代理)",
+      "overriddencreatedon": "レコード作成日",
+      "owningbusinessunit": "所属部署",
+      "owningteam": "所有チーム",
+      "owninguser": "所有ユーザー",
+      "statecode": "状態",
+      "statuscode": "ステータス",
+      "timezoneruleversionnumber": "タイム ゾーン規則のバージョン番号",
+      "tkr_acquiredon": "AcquiredOn",
+      "tkr_currentstatus": "CurrentStatus",
+      "tkr_department": "Department",
+      "tkr_equipment_AsyncOperations": "システム ジョブ ",
+      "tkr_equipment_BulkDeleteFailures": "一括削除の失敗 ",
+      "tkr_equipment_DuplicateBaseRecord": "レコードの重複  (tkr_equipment_DuplicateBaseRecord)",
+      "tkr_equipment_DuplicateMatchingRecord": "レコードの重複  (tkr_equipment_DuplicateMatchingRecord)",
+      "tkr_equipment_MailboxTrackingFolders": "メールボックス自動追跡フォルダー",
+      "tkr_equipment_PrincipalObjectAttributeAccesses": "フィールド共有 ",
+      "tkr_equipment_ProcessSession": "プロセス セッション",
+      "tkr_equipment_SyncErrors": "同期エラー",
+      "tkr_equipmentcode": "EquipmentCode",
+      "tkr_equipmentid": "EquipmentId",
+      "tkr_equipmenttype": "EquipmentType",
+      "tkr_fixedassetnumber": "FixedAssetNumber",
+      "tkr_inventoryhistory_EquiptmentId_tkr_equipment": "InventoryHistory",
+      "tkr_qrcodeimage": "QRCodeImage",
+      "tkr_qrcodeimageid": "tkr_QRCodeImageId",
+      "tkr_serialnumber": "SerialNumber",
+      "utcconversiontimezonecode": "UTC 変換タイム ゾーン コード",
+      "versionnumber": "バージョン番号"
+    },
+    "PreferredName": "Equipment",
+    "Type": "NativeCDSDataSourceInfo"
+  },
+  {
+    "DisplayName": "Equipment (ビュー)",
+    "Name": "_tkr_equipment_views",
+    "RelatedEntityName": "Equipment",
+    "TrimmedViewName": true,
+    "Type": "ViewInfo",
+    "ViewInfoNameMapping": {
+      "2bdd3d4c-6852-4e45-93b5-0d50e7aaafd9": "非アクティブなEquipment",
+      "3edbe6a7-bdce-4883-9f0d-ed1fa3d2e092": "Equipment検索ダイアログ ビュー",
+      "aeb7eb7d-48cc-4fd7-a8cb-4c14692bceb5": "アクティブなEquipment",
+      "bdb5ffa1-cb19-4f41-9fd4-7b652d1ba3de": "Equipmentの高度な検索ビュー",
+      "e387107a-eb90-4718-956a-5a682bcecd9f": "Equipment関連ビュー"
+    }
+  },
+  {
+    "DisplayName": "Departments",
+    "Name": "tkr_departments",
+    "OptionSetInfoNameMapping": {
+      "931310000": "東京営業部",
+      "931310001": "大阪支店",
+      "931310002": "名古屋営業所",
+      "931310003": "仙台営業所",
+      "931310004": "札幌営業所",
+      "931310005": "技術部",
+      "931310006": "経理部",
+      "931310007": "総務部",
+      "931310008": "役員",
+      "931310009": "業務管理部"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": true,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "tkr_department",
+        "OptionSetReferenceEntityName": "Equipment"
+      },
+      "OptionSetReferenceItem1": {
+        "OptionSetReferenceColumnName": "tkr_department",
+        "OptionSetReferenceEntityName": "InventoryHistory"
+      }
+    },
+    "OptionSetTypeKey": "PicklistType",
+    "RelatedColumnInvariantName": "tkr_department",
+    "RelatedEntityName": "Equipment",
+    "Type": "OptionSetInfo"
+  },
+  {
+    "DisplayName": "状態 (Equipment)",
+    "Name": "tkr_equipment_statecode",
+    "OptionSetInfoNameMapping": {
+      "0": "アクティブ",
+      "1": "非アクティブ"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": false,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "statecode",
+        "OptionSetReferenceEntityName": "Equipment"
+      }
+    },
+    "OptionSetTypeKey": "StateType",
+    "RelatedColumnInvariantName": "statecode",
+    "RelatedEntityName": "Equipment",
+    "Type": "OptionSetInfo"
+  },
+  {
+    "DisplayName": "ステータス (Equipment)",
+    "Name": "tkr_equipment_statuscode",
+    "OptionSetInfoNameMapping": {
+      "1": "アクティブ",
+      "2": "非アクティブ"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": false,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "statuscode",
+        "OptionSetReferenceEntityName": "Equipment"
+      }
+    },
+    "OptionSetTypeKey": "StatusType",
+    "RelatedColumnInvariantName": "statuscode",
+    "RelatedEntityName": "Equipment",
+    "Type": "OptionSetInfo"
+  },
+  {
+    "DisplayName": "EquipmentStatus",
+    "Name": "tkr_equipmentstatus",
+    "OptionSetInfoNameMapping": {
+      "931310000": "使用中",
+      "931310001": "廃棄",
+      "931310002": "紛失",
+      "931310003": "返品",
+      "931310004": "除却済み",
+      "931310005": "使用前/総務保管"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": true,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "tkr_currentstatus",
+        "OptionSetReferenceEntityName": "Equipment"
+      },
+      "OptionSetReferenceItem1": {
+        "OptionSetReferenceColumnName": "tkr_equipmentstatus",
+        "OptionSetReferenceEntityName": "InventoryHistory"
+      }
+    },
+    "OptionSetTypeKey": "PicklistType",
+    "RelatedColumnInvariantName": "tkr_currentstatus",
+    "RelatedEntityName": "Equipment",
+    "Type": "OptionSetInfo"
+  },
+  {
+    "DisplayName": "EquipmentType",
+    "Name": "tkr_equipmenttype",
+    "OptionSetInfoNameMapping": {
+      "931310000": "ノートPC",
+      "931310001": "デスクトップPC",
+      "931310002": "スマートフォン",
+      "931310003": "ディスプレイ",
+      "931310004": "スピーカー"
+    },
+    "OptionSetIsBooleanValued": false,
+    "OptionSetIsGlobal": true,
+    "OptionSetReference": {
+      "OptionSetReferenceItem0": {
+        "OptionSetReferenceColumnName": "tkr_equipmenttype",
+        "OptionSetReferenceEntityName": "Equipment"
+      }
+    },
+    "OptionSetTypeKey": "PicklistType",
+    "RelatedColumnInvariantName": "tkr_equipmenttype",
+    "RelatedEntityName": "Equipment",
+    "Type": "OptionSetInfo"
+  }
+]
